@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import stations.StationBean;
+import stations.StationManager;
 
 /**
  *
@@ -63,12 +65,16 @@ public class MPlayerController implements MediaPlayerControl{
 
     @Override
     public void setStreamingURL(String target) {
-        //TODO: check if target exists bzw. map target id to url
+        try {
+            int stationid = Integer.parseInt(target);
+            StationBean stationBean = StationManager.getInstance().getStationByID(stationid);
+            if(stationBean == null) throw new NullPointerException("Station ID unbekannt");
+            writeToFiFo("loadfile " + stationBean.getPath());
+            
+        } catch (Exception e) {
+            System.err.println("Station konnte nicht gewechselt werden: " + e.getMessage());
+        }
         
-        writeToFiFo("loadfile " + target);
     }
-    
-    
-  
     
 }

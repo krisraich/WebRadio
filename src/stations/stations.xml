@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<radiostations>
+    <station>
+        <id>1</id>
+        <img>http://cdn.antenne.de/thumbs/2016/08/classic-579f896538009.91c2c9af.png</img>
+        <desc>Rock Antenne - Classic Perln</desc>
+        <path>http://mp3channels.webradio.rockantenne.de/classic-perlen.aac</path>
+    </station>
+    <station>
+        <id>2</id>
+        <img>http://cdn.antenne.de/thumbs/2016/08/rockantenne-579f89654be42.91c2c9af.png</img>
+        <desc>Rock Antenne</desc>
+        <path>http://mp3channels.webradio.rockantenne.de/rockantenne.aac</path>
+    </station>
+    <station>
+        <id>3</id>
+        <img>http://cdn.antenne.de/thumbs/2016/08/heavymetal-579f896540c9c.91c2c9af.png</img>
+        <desc>Rock Antenne - Heavy Metal</desc>
+        <path>http://mp3channels.webradio.rockantenne.de/heavy-metal.aac</path>
+    </station>
+    <station>
+        <id>4</id>
+        <img>http://www.rockradio1.com/themes/RD-GamerBlackV2/images/HDR/Text_Logo.png</img>
+        <desc>Rock Radio 1</desc>
+        <path>http://192.99.147.61:8000</path>
+    </station>
+    <station>
+        <id>5</id>
+        <img>http://www.bassdrive.com/images/logo.png</img>
+        <desc>Basedrive</desc>
+        <path>http://amsterdam2.shouthost.com.streams.bassdrive.com:8000</path>
+    </station>
+    <station>
+        <id>6</id>
+        <img>http://fm4.orf.at/v2static/images/fm4_logo.jpg</img>
+        <desc>FM4</desc>
+        <path>http://mp3stream1.apasf.apa.at:8000</path>
+    </station>
+    <station>
+        <id>7</id>
+        <img>http://radio.orf.at/player/images/tir-radio-47.png</img>
+        <desc>Radio Tirol</desc>
+        <path>http://194.232.200.159:80/</path>
+    </station>
+    <station>
+        <id>8</id>
+        <img>https://www.phonostar.de/images/auto_created/welle1_tirol2184x184.png</img>
+        <desc>Welle 1 Tirol</desc>
+        <path>http://188.138.9.183/welle-innsbruck.mp3</path>
+    </station>
+    <station>
+        <id>9</id>
+        <img>http://www.radiodalmacija.hr/wp-content/uploads/2016/09/logo1.png</img>
+        <desc>Radio Dalmacija</desc>
+        <path>http://88.198.161.69:8000/listen.pls?sid=1</path>
+    </station>
+    <station>
+        <id>10</id>
+        <img>http://yammat.fm/wp-content/uploads/2017/01/yammat-2017-logo.png</img>
+        <desc>YAMMAT FM</desc>
+        <path>http://192.240.102.133:12430/listen.pls?sid=1</path>
+    </station>
+    <station>
+        <id>11</id>
+        <img>http://www.nashvilletv.nl/wp-content/uploads/2016/07/beidelogos-wit.png</img>
+        <desc>Nashville FM</desc>
+        <path>http://46.231.87.20:8300/listen.pls?sid=1</path>
+    </station>
+    <station>
+        <id>12</id>
+        <img>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVqjBjflMsUtmN-vO8nHv7c1jXfDeR4EEZBejyHD4LckKKv0nzpA</img>
+        <desc>Irish Country Music Radio Studio 1 </desc>
+        <path>http://46.28.49.164:7502/</path>
+    </station>
+    <station>
+        <id>13</id>
+        <img>http://www.lounge.fm/wp-content/themes/loungefm_2014/img/LFM_Logo_800.png</img>
+        <desc>Lounge FM</desc>
+        <path>http://188.138.9.183/digital.mp3</path>
+    </station>
+    <station>
+        <id>14</id>
+        <img>http://stream.psychomed.gr/images/logo.png</img>
+        <desc>Audiophile Audition - Lounge</desc>
+        <path>http://8.38.78.173:8226/stream</path>
+    </station>
+    <station>
+        <id>15</id>
+        <img>https://placehold.it/400x300</img>
+        <desc>Lounge-Radio</desc>
+        <path>http://77.235.42.90:80/</path>
+    </station>
+    <station>
+        <id>16</id>
+        <img>http://idobi.com/wp-content/themes/idobi-2015/i/station-logos/white/idobi-howl.png</img>
+        <desc>idobi Howl</desc>
+        <path>http://69.46.88.26:80/</path>
+    </station>
+    <station>
+        <id>17</id>
+        <img>http://www.rockhausradio.de/images/rhr-logo.png</img>
+        <desc>Rockhaus Radio</desc>
+        <path>http://91.250.77.9:8220/</path>
+    </station>
+    <station>
+        <id>18</id>
+        <img>http://www.redfm.gr/wp-content/uploads/2014/04/logo2.png</img>
+        <desc>Red - Rock Radio</desc>
+        <path>http://206.190.150.92:8295/listen.pls?sid=1</path>
+    </station>
+    <station>
+        <id>19</id>
+        <img>http://www.radiogothic.net/theme/graphics/design/red/gothic_radio.png</img>
+        <desc>Radio Gothic</desc>
+        <path>http://142.4.202.125:8006/listen.pls?sid=1</path>
+    </station>
+    <station>
+        <id>20</id>
+        <img>http://static.radio.at/images/broadcasts/92/8d/29418/c175.png</img>
+        <desc>1000 Goldies</desc>
+        <path>http://streaming.radionomy.com/1000Oldies</path>
+    </station>
+</radiostations>
+

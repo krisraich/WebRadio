@@ -5,6 +5,7 @@ import palyer.MPlayerController;
 import palyer.MPlayerWrapper;
 import palyer.state.PlayerState;
 import palyer.state.StateReader;
+import stations.StationManager;
 import webserver.ControlHandler;
 import webserver.NotifyHandler;
 import webserver.WebServer;
@@ -14,6 +15,10 @@ import webserver.WebServer;
  *
  * AIO Programm zur Ansteuerung von MPlayer (linux)
  * startet einen Webserver
+ * 
+ *   Liste der stations
+ *     /getStationList
+ * 
  *   Status des players:
  *      /update/blocking (Blockiert bis sich status ändert)
  *      /update/instant
@@ -59,8 +64,8 @@ public class Radio3 {
 
         
         // -------- init Playlist? ---------
-        //TODO: JSON Parser implementieren, playliste in datei auslagern
         
+//        StationManager stationManager = StationManager.getInstance();
         
         // -------- Starte Webserver ---------
         

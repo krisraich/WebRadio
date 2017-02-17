@@ -3,6 +3,7 @@ package palyer;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import palyer.state.StateReader;
+import stations.StationManager;
 
 /**
  *
@@ -49,11 +50,11 @@ public class MPlayerWrapper {
     };
 
     public MPlayerWrapper() {
-        this.processBuilder = new ProcessBuilder("mplayer", "http://mp3channels.webradio.rockantenne.de/classic-perlen.aac");
+        this.processBuilder = new ProcessBuilder("mplayer", StationManager.getInstance().getFirstEntryPath());
     }
 
     public MPlayerWrapper(String pathToFifoFile) {
-        this.processBuilder = new ProcessBuilder("mplayer", "-slave", "-input", "file=" + pathToFifoFile, "http://mp3channels.webradio.rockantenne.de/classic-perlen.aac");
+        this.processBuilder = new ProcessBuilder("mplayer", "-slave", "-input", "file=" + pathToFifoFile, StationManager.getInstance().getFirstEntryPath());
     }
 
     public void start() {

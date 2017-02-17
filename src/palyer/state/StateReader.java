@@ -1,12 +1,10 @@
 package palyer.state;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Matcher;
 
 /**
  *
@@ -42,7 +40,7 @@ public class StateReader extends Thread{
     private final AtomicBoolean dowork = new AtomicBoolean(true);
     
     private StateReader(InputStream inputStream){
-        this.setName("Player Outpu Streamreader");
+        this.setName("Player Output Streamreader");
         this.inputStream = inputStream;
     }
     
@@ -56,11 +54,9 @@ public class StateReader extends Thread{
                 line = br.readLine().trim();
 
                 // process the line.
-                if(line == null){
+                if(line == null || line.length() == 0){
                     //suspend Thread
                     Thread.sleep(100);
-                    continue;
-                }else if(line.length() == 0){
                     continue;
                 }
                 

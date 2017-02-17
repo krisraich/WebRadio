@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import stations.StationManager;
 
 /**
  *
@@ -25,6 +26,9 @@ public class RequestHandler extends AbstractRequestHandler {
             reqURI = "/index.html";
         }
         
+        if("/getStationList".equals(reqURI)){
+            FILE_CACHE.put(reqURI, StationManager.getInstance().getBeansAsJsonArray());
+        }
         
         if(! FILE_CACHE.containsKey(reqURI)){
             

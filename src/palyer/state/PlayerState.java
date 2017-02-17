@@ -3,6 +3,7 @@ package palyer.state;
 import java.util.Observable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
+import radio3.Util;
 
 /**
  *
@@ -120,12 +121,18 @@ public class PlayerState extends Observable{
     }
     
     public byte[] getStateForWebRequest(){
-        return "test state".getBytes();
+        return (" { \"title\": " + Util.sanitizeJson(this.streamTitle) + ", " + 
+                "\"volume\": " + this.volume + ", " + 
+                "\"mute\": " + this.mute + ", " + 
+                "\"playing\": " + this.playing + "}").getBytes();
     }
 
     @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return "Current Title: " + this.streamTitle + 
+                "\r\nVolume: " + this.volume +
+                "\r\nMute: " + this.mute +
+                "\r\nPlaying: " + this.playing;
     }
     
 
