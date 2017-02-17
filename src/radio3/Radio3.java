@@ -4,6 +4,7 @@ import java.io.IOException;
 import palyer.MPlayerController;
 import palyer.MPlayerWrapper;
 import palyer.state.PlayerState;
+import palyer.state.StateReader;
 import webserver.ControlHandler;
 import webserver.NotifyHandler;
 import webserver.WebServer;
@@ -58,7 +59,7 @@ public class Radio3 {
 
         
         // -------- init Playlist? ---------
-        
+        //TODO: JSON Parser implementieren, playliste in datei auslagern
         
         
         // -------- Starte Webserver ---------
@@ -91,11 +92,7 @@ public class Radio3 {
         // -------- Init Player state & Observer ---------
         PlayerState playerState = PlayerState.getInstacnce();
         playerState.addObserver(notifyHandler);
-        
-        
-        // -------- Bind Output reader ---------
-        
-        
+
         
         // -------- Starte den stuff ---------
         playerState.startWatching();
@@ -110,6 +107,7 @@ public class Radio3 {
         // -------- Stoppe den  stuff ---------
         mPlayerWrapper.stop();
         playerState.stopWatching();
+        StateReader.stopProcessing();
         server.stop();
         
     }

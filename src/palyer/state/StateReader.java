@@ -26,21 +26,26 @@ public class StateReader extends Thread{
      * @param inputStream 
      */
     public static synchronized void bindInputStreamAndProcess(InputStream inputStream){
+        stopProcessing();
+        currentInstance = new StateReader(inputStream);
+        currentInstance.start();
+    }
+    
+    public static void stopProcessing(){
         if(currentInstance != null){
             currentInstance.dowork.set(false);
             currentInstance.interrupt();
         }
-        
-        currentInstance = new StateReader(inputStream);
-        currentInstance.start();
     }
     
     private final InputStream inputStream;
     private final AtomicBoolean dowork = new AtomicBoolean(true);
     
     private StateReader(InputStream inputStream){
+        this.setName("Player Outpu Streamreader");
         this.inputStream = inputStream;
     }
+    
     
     @Override
     public void run() {
