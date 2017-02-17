@@ -27,8 +27,8 @@ public class NotifyHandler extends AbstractRequestHandler implements Observer{
            
        }else if(reqURI.equals(context + CMD_BLOCK)){
            
-          waitForUpdate(he);
-            
+            waitForUpdate(he);
+            System.out.println("Sending Update - awake");
        }else {
            //default
            this.sendNotFound(he);
@@ -47,6 +47,7 @@ public class NotifyHandler extends AbstractRequestHandler implements Observer{
 
     @Override
     public synchronized void update(Observable o, Object arg) {
+        System.out.println("Sending Update - notifyAll");
         notifyAll();
     }
 }

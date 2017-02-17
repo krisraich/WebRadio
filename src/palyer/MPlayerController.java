@@ -22,6 +22,7 @@ public class MPlayerController implements MediaPlayerControl{
 
     private synchronized void writeToFiFo(String cmd){
         try {
+            System.out.println("Write cmd to fifo file..");
             Files.write(pathToFifoFile, cmd.getBytes(), StandardOpenOption.WRITE);
         } catch (IOException ex) {
             System.err.println("FiFo File konnte nicht beschrieben werden: " + ex.getMessage());

@@ -14,6 +14,11 @@ import webserver.WebServer;
 /**
  *
  * AIO Programm zur Ansteuerung von MPlayer (linux)
+ * 
+ * Argumente
+ *  p= ist die portnummer vom Webserver (default ist 80)
+ *  c= pfad zum fifofile für die steuerung
+ * 
  * startet einen Webserver
  * 
  *   Liste der stations

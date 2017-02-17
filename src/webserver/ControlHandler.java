@@ -52,7 +52,8 @@ public class ControlHandler extends AbstractRequestHandler{
        }else{
            //default
            this.sendNotFound(he);
+           return;
        }
-
+       this.sendTrue(he);
     }
 }
