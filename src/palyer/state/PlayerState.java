@@ -36,15 +36,16 @@ public class PlayerState extends Observable{
         }
     };
     
-    private static PlayerState instance = null;
 
-    public PlayerState() {
+
+    private PlayerState() {}
+    
+    private static PlayerState instance = null;
+    public synchronized static PlayerState getInstacnce(){
         if(PlayerState.instance == null){
-            PlayerState.instance = this;
+            PlayerState.instance = new PlayerState();
         }
-    }
-    public static byte[] GetStateForWebRequest(){
-        return instance.getStateForWebRequest();
+        return PlayerState.instance;
     }
     
     
@@ -118,8 +119,14 @@ public class PlayerState extends Observable{
         lastUpdate.set(System.currentTimeMillis());
     }
     
-    private byte[] getStateForWebRequest(){
+    public byte[] getStateForWebRequest(){
         return "test state".getBytes();
     }
+
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 
 }

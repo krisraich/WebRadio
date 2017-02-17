@@ -11,6 +11,19 @@ import webserver.WebServer;
 
 /**
  *
+ * AIO Programm zur Ansteuerung von MPlayer (linux)
+ * startet einen Webserver
+ *   Status des players:
+ *      /update/blocking (Blockiert bis sich status ändert)
+ *      /update/instant
+ * 
+ *   Steuerung des Players
+ *      /control/pause
+ *      /control/play
+ *      /control/setStream?path=http://mp3channels.webradio.rockantenne.de/classic-perlen.aac
+ *      (Siehe ControlHandler.java)
+ * 
+ * 
  * @author Kris
  */
 public class Radio3 {
@@ -72,11 +85,11 @@ public class Radio3 {
         
         // -------- Starte MPlayaer Notifyer ---------   
         NotifyHandler notifyHandler = new NotifyHandler();
-        server.addContext("/notify", notifyHandler);
+        server.addContext("/update", notifyHandler);
         
         
         // -------- Init Player state & Observer ---------
-        PlayerState playerState = new PlayerState();
+        PlayerState playerState = PlayerState.getInstacnce();
         playerState.addObserver(notifyHandler);
         
         

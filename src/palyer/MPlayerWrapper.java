@@ -2,6 +2,7 @@ package palyer;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import palyer.state.StateReader;
 
 /**
  *
@@ -24,7 +25,7 @@ public class MPlayerWrapper {
                 try {
                     process = processBuilder.start();
 
-                    process.getInputStream();
+                    StateReader.bindInputStreamAndProcess(process.getInputStream());
 
                     process.waitFor();
                     if (isPlaying.get()) {

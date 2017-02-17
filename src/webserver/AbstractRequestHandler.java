@@ -12,6 +12,7 @@ import java.io.OutputStream;
 public abstract class AbstractRequestHandler implements HttpHandler{
     
     public static final String FILE_NOT_FOUND = "File not found: ";
+    public static final String ERROR_OCCURRED = "An Error has occurred: ";
     
     protected String context;
     
@@ -23,6 +24,12 @@ public abstract class AbstractRequestHandler implements HttpHandler{
     protected void sendNotFound(HttpExchange he) throws IOException{
         String response = FILE_NOT_FOUND + he.getRequestURI().toString();
         he.sendResponseHeaders(404, response.length());
+        send(he, response.getBytes());
+    }
+    
+    protected void sendError(HttpExchange he, String msg) throws IOException{
+        String response = ERROR_OCCURRED + msg + " " + he.getRequestURI().toString();
+        he.sendResponseHeaders(500, response.length());
         send(he, response.getBytes());
     }
 

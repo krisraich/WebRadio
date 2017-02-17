@@ -4,8 +4,6 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import palyer.state.PlayerState;
 
 /**
@@ -17,12 +15,6 @@ public class NotifyHandler extends AbstractRequestHandler implements Observer{
     public static final String CMD_BLOCK = "/blocking";
     public static final String CMD_INSTANT = "/instant";
 
-
-
-    public NotifyHandler() {
-        
-    }
-    
     
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -31,16 +23,11 @@ public class NotifyHandler extends AbstractRequestHandler implements Observer{
         
        if(reqURI.equals(context + CMD_INSTANT)){
            
-           this.sendData(he, PlayerState.GetStateForWebRequest());
+           this.sendData(he, PlayerState.getInstacnce().getStateForWebRequest());
            
        }else if(reqURI.equals(context + CMD_BLOCK)){
            
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(NotifyHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.sendData(he, PlayerState.GetStateForWebRequest());
+          waitForUpdate(he);
             
        }else {
            //default
@@ -48,9 +35,18 @@ public class NotifyHandler extends AbstractRequestHandler implements Observer{
        }
 
     }
+    
+    private synchronized void waitForUpdate(HttpExchange he) throws IOException{
+        try {
+            wait();
+            this.sendData(he, PlayerState.getInstacnce().getStateForWebRequest());
+        } catch (InterruptedException ex) {
+            this.sendError(he, "Timeout while waiting");
+        }
+    }
 
     @Override
-    public void update(Observable o, Object arg) {
-        
+    public synchronized void update(Observable o, Object arg) {
+        notifyAll();
     }
 }
