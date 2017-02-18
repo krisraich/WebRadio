@@ -31,7 +31,7 @@ public abstract class AbstractRequestHandler implements HttpHandler{
         send(he, response.getBytes());
     }
     
-    protected void sendError(HttpExchange he, String msg) throws IOException{
+    protected void sendError(HttpExchange he) throws IOException{
 //        String response = ERROR_OCCURRED + msg + " " + he.getRequestURI().toString();
         he.sendResponseHeaders(500, "false".length());
         send(he, "false".getBytes());

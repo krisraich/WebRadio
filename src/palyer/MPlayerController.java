@@ -2,6 +2,7 @@ package palyer;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import palyer.state.PlayerState;
 import stations.StationBean;
 import stations.StationManager;
 
@@ -19,12 +20,13 @@ public class MPlayerController implements MediaPlayerControl {
     }
 
     private synchronized void writeToFiFo(String cmd) {
-        System.out.print("Write '" + cmd + "' to fifo file (" + pathToFifoFile + ")");
+//        System.out.print("Write '" + cmd + "' to fifo file (" + pathToFifoFile + ")");
+//        System.out.print("Send cmd to player");
         try (FileWriter fileWriter = new FileWriter(pathToFifoFile)) {
             fileWriter.write(cmd);
-            fileWriter.write("\n");
+            fileWriter.write("\n"); //nicht vergessen!!
             fileWriter.flush();
-            System.out.println("... done");
+//            System.out.println("... done");
         } catch (IOException ex) {
             System.err.println("FiFo File konnte nicht beschrieben werden: " + ex.getMessage());
         }
@@ -66,17 +68,16 @@ public class MPlayerController implements MediaPlayerControl {
     }
 
     @Override
-    public void setStreamingURL(String target) {
-        try {
-            int stationid = Integer.parseInt(target);
-            StationBean stationBean = StationManager.getInstance().getStationByID(stationid);
-            if (stationBean == null) {
-                throw new NullPointerException("Station ID unbekannt");
+    public void setStationID(int stationid) {
+        StationBean stationBean = StationManager.getInstance().getStationByID(stationid);
+        if (stationBean == null) {
+            System.err.println("Unkonwn Station ID");
+        } else {
+            PlayerState playerState = PlayerState.getInstacnce();
+            if (playerState.getId() != stationid) {
+                playerState.setId(stationid);
+                writeToFiFo("loadfile " + stationBean.getPath());
             }
-            writeToFiFo("loadfile " + stationBean.getPath());
-
-        } catch (Exception e) {
-            System.err.println("Station konnte nicht gewechselt werden: " + e.getMessage());
         }
 
     }

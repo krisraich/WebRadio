@@ -5,7 +5,6 @@ import palyer.MPlayerController;
 import palyer.MPlayerWrapper;
 import palyer.state.PlayerState;
 import palyer.state.StateReader;
-import stations.StationManager;
 import webserver.ControlHandler;
 import webserver.UpdateHandler;
 import webserver.WebServer;
@@ -40,6 +39,8 @@ import webserver.WebServer;
  */
 public class Radio3 {
 
+//    public static final boolean IS_DEBUG = true;
+    
     /**
      * @param args the command line arguments
      */

@@ -13,7 +13,7 @@ public class PlayerState extends Observable{
     private byte volume;
     private boolean mute;
     private boolean playing;
-    
+    private int id = 1;
 
 
     private PlayerState() {}
@@ -79,10 +79,23 @@ public class PlayerState extends Observable{
             checkedNotifyObserver();
         }
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        if(this.id != id){
+            this.id = id;
+            checkedNotifyObserver();
+        }
+    }
+    
     
 
     public byte[] getStateForWebRequest(){
         return (" { \"title\": " + Util.sanitizeJson(this.streamTitle) + ", " + 
+                "\"id\": " + this.id + ", " + 
                 "\"volume\": " + this.volume + ", " + 
                 "\"mute\": " + this.mute + ", " + 
                 "\"playing\": " + this.playing + "}").getBytes();
@@ -91,6 +104,7 @@ public class PlayerState extends Observable{
     @Override
     public String toString() {
         return "Current Title: " + this.streamTitle + 
+                "\r\nID: " + this.id +
                 "\r\nVolume: " + this.volume +
                 "\r\nMute: " + this.mute +
                 "\r\nPlaying: " + this.playing;

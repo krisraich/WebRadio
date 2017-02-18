@@ -15,7 +15,7 @@ import stations.StationManager;
 public class RequestHandler extends AbstractRequestHandler {
 
     
-    private static final Map<String, byte[]> FILE_CACHE = new ConcurrentHashMap<>();
+    private static final Map<String, CacheResponseHolder> FILE_CACHE = new ConcurrentHashMap<>();
     
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -26,8 +26,14 @@ public class RequestHandler extends AbstractRequestHandler {
             reqURI = "/index.html";
         }
         
+
         if("/getStationList".equals(reqURI)){
-            FILE_CACHE.put(reqURI, StationManager.getInstance().getBeansAsJsonArray());
+            FILE_CACHE.put(reqURI, 
+                    CacheResponseHolder.createCacheResponseHolderWithMimeType(
+                            "application/json", 
+                            StationManager.getInstance().getBeansAsJsonArray()
+                    )
+            );
         }
         
         if(! FILE_CACHE.containsKey(reqURI)){
@@ -50,10 +56,14 @@ public class RequestHandler extends AbstractRequestHandler {
 
             buffer.flush();
 
-            FILE_CACHE.put(reqURI,  buffer.toByteArray());
+            FILE_CACHE.put(reqURI, 
+                    CacheResponseHolder.createCacheResponseHolderFromURL(reqURI, buffer.toByteArray())
+            );
         }
         
-        this.sendData(he, FILE_CACHE.get(reqURI));
+        CacheResponseHolder response = FILE_CACHE.get(reqURI);
+        he.getResponseHeaders().add("Content-Type", response.getMimetype());
+        this.sendData(he, response.getResponseData());
 
     }
  

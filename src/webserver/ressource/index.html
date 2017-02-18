@@ -17,66 +17,17 @@
 
         <link href="/css/bootstrap.min.css" rel="stylesheet">
         <link href="/css/4-col-portfolio.css" rel="stylesheet">
-        <!-- link href="/css/font-awesome.min.css" rel="stylesheet" -->
-
-
-        <!--        <script>
-                    function sendRequest(request, data = ""){
-                        $.ajax({
-                            url: "ajax.php",
-                            type: "post",
-                            data: {"q": request, "data": data},
-                            success: function (response) {
-                                //console.log(response);
-                                //updateTitle();
-                                setCurrentActive();
-                            }, error: function (jqXHR, textStatus, errorThrown) {
-                                console.log(textStatus, errorThrown);
-                                //alert("Can't reach backend...");
-                            }
-                        });
-                    }
-        
-                    /*
-                     function getChannels() {sendRequest("getChannels");}
-                     function getTitle() {sendRequest("getTitle");}
-                     */
-        
-                    function setChannel(str) {
-                        sendRequest("setChannel", str);
-                    }
-                    function vUp() {
-                        sendRequest("vUp");
-                    }
-                    function vDown() {
-                        sendRequest("vDown");
-                    }
-                    function mute() {
-                        sendRequest("mute");
-                    }
-                    function pause() {
-                        sendRequest("pause");
-                    }
-                </script>-->
+ 
 
     </head>
 
     <body>
 
-        <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <!--button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                    </button -->
                     <a class="navbar-brand" >FH - Radio</a>
                 </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
@@ -87,9 +38,7 @@
                         </li>
                     </ul>
                 </div>
-                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.container -->
         </nav>
 
         <!-- Page Content -->
@@ -102,36 +51,49 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="page-header">Volume Cöntröl
-                        <!--<small>Secondary Text</small>-->
-                    </h2>
-                </div>
-                <div class="col-lg-2 res-controls">
+				<div class="col-lg-7">
+					<div class="row">
+						<div class="col-lg-12">
+							<h2 class="page-header">Player Cöntröls</h2>
+						</div>
+						
+						<div class="col-lg-4 res-controls">
+							<div class="btn-group" role="group" aria-label="Volume Controls">
+								<button type="button" class="btn btn-default btn-lg" id="vup"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>
+								<button type="button" class="btn btn-default btn-lg" id="vdown"><span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span></button>
+								<button type="button" class="btn btn-default btn-lg" onclick="javascript: mute()"><span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span></button>
+							</div>
+						</div>
 
-                    <div class="btn-group" role="group" aria-label="Volume Controls">
-                        <button type="button" class="btn btn-default btn-lg" id="vup"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default btn-lg" id="vdown"><span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span></button>
-                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: mute()"><span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span></button>
-                    </div>
-
-                </div>
-
-                <div class="col-lg-8 text-center res-controls">
-                    <div class="btn-group" role="group" aria-label="Playback Controls">
-                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: pause()"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play/Stop</button>
-                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: prevChannel()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Previous Channel</button>
-                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: nextChannel()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Next Channel</button>
-                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: rndChannel()"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Random Channel</button>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 text-right res-controls">
-                    <div class="btn-group" role="group" aria-label="General Controls">
-                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: setCurrentActive()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh State</button>
-                    </div>
-
-                </div>
+						<div class="col-lg-8 text-center res-controls">
+							<div class="btn-group" role="group" aria-label="Playback Controls">
+								<button type="button" class="btn btn-default btn-lg" onclick="javascript: pause()"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+								<button type="button" class="btn btn-default btn-lg" onclick="javascript: prevChannel()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Prev</button>
+								<button type="button" class="btn btn-default btn-lg" onclick="javascript: nextChannel()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Next</button>
+								<button type="button" class="btn btn-default btn-lg" onclick="javascript: rndChannel()"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Rnd</button>
+							</div>
+						</div> 
+					</div>
+				</div>
+				
+				<div class="col-lg-5">
+					<div class="row">
+						<div class="col-lg-12">
+								<h2 class="page-header">Player State</h2>
+						</div>
+						<div class="col-lg-12">
+							<div class="input-group input-group-lg">
+								<span class="input-group-addon" >Playing:</span>
+								<input type="text" class="form-control disabled" readonly id="isPlaying">
+								<span class="input-group-addon" >Vol:</span>
+								<input type="text" class="form-control disabled" readonly id="vol">
+								<span class="input-group-addon" >Mute:</span>
+								<input type="text" class="form-control disabled" readonly id="isMute">
+							</div>
+						</div>
+					</div>
+				</div>
+				
             </div>
 
             <!-- Page Heading -->
@@ -178,27 +140,54 @@
 
 
             /* init ui*/
-            
            
             $.get( "/getStationList", function( data ) {
-                data = JSON.parse(data);
+                //data = JSON.parse(data);
                 for (var i = 0; i < data.length; i++) {
                    var current = data[i];
                    $( "#stationlist" ).append( 
-                    '<div class="col-md-3 col-sm-6 portfolio-item-wrapper"><div class="portfolio-item" data-chid="' + current.id + '" ><div class="center-stuff"><img class="img-responsive" src="' +current.img + '" alt="' + current.desc + '"><p>' + current.desc + '</p></div></div></div>'       
+						'<div class="col-md-3 col-sm-6 portfolio-item-wrapper"><div class="portfolio-item" data-chid="' + current.id + '" ><div class="center-stuff"><img class="img-responsive" src="' +current.img + '" alt="' + current.desc + '"><p>' + current.desc + '</p></div></div></div>'       
                     );
-               }
+				}
+				$(".portfolio-item").click(function () {
+					setChannel($(this).data("chid"));
+				});
             });
 
             function updatePlayerState(data){
-                data = JSON.parse(data);
-                console.log("update player");
+				if(!data){
+					console.log("empty response");
+					return;
+				}
+				
+                //data = JSON.parse(data);
+                //console.log(data);
+				
+				//set title
                 $("#currenttitle").text(data.title);
                 document.title = data.title + " - Webradio";
+				
+				//player stat
+				$("#isPlaying").val(data.playing ? "Y" : "N");
+				$("#vol").val(data.volume);
+				$("#isMute").val(data.mute ? "Y" : "N");
+
+				//playing id
+                $(".portfolio-item").removeClass("active");
+                $(".portfolio-item[data-chid='" + data.id + "']").addClass("active");
                 
-                //blocking request
-                var random = Math.floor((Math.random() * 1000) + 1);
-                $.get( "/update/blocking/" + random ,updatePlayerState);
+                //blocking request, random url for multithreading
+				
+				var getData = function(){
+					var random = Math.floor((Math.random() * 1000) + 1);
+					$.get( "/update/blocking/" + random ,updatePlayerState)
+						.fail(function() {
+							console.log("Cant reach Server.. try again");
+							setTimeout(getData, 1000);
+						});
+				};
+				getData();
+				
             }
 
             $.get( "/update/instant",updatePlayerState);
@@ -244,18 +233,6 @@
                         clock = setInterval(vUp, 200);
                     });
 
-            $(".portfolio-item").click(function () {
-                setChannel($(this).data("chid"));
-            });
-
-
-//            function setCurrentActive() {
-//                $.get("/currentStation", function (data) {
-//                    $(".portfolio-item").removeClass("active");
-//                    $(".portfolio-item[data-chid='" + data + "']").addClass("active");
-//                });
-//            }
-//            setCurrentActive();
 
             function prevChannel() {
                 var chid = $(".portfolio-item.active").parent().prev().find(".portfolio-item").data("chid");
@@ -282,4 +259,3 @@
     </body>
 
 </html>
-

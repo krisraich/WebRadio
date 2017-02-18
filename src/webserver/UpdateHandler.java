@@ -20,6 +20,8 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
     public void handle(HttpExchange he) throws IOException {
        
         String reqURI = he.getRequestURI().toString();
+        he.getResponseHeaders().add("Content-Type", "application/json");
+        
         
        if(reqURI.equals(context + CMD_INSTANT)){
            
@@ -30,13 +32,13 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
            try {
                 synchronized(this){
                     wait();
-                    System.out.println("Sending Update - awake");
+                    System.out.println("Sending state to: " + he.getRemoteAddress());
                     this.sendData(he, PlayerState.getInstacnce().getStateForWebRequest());
                 }
             } catch (InterruptedException ex) {
-                this.sendError(he, "Timeout while waiting");
+                System.err.println("Timeout while waiting");
+                this.sendError(he);
             }
-           
             
        }else {
            //default
@@ -48,7 +50,7 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("Sending Update - notifyAll");
+//        System.out.println("State changed. sending update.");
          synchronized(this){
              notifyAll();
          }

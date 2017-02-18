@@ -15,6 +15,6 @@ public interface MediaPlayerControl {
     public void volumeUp();
     public void volumeDown();
     
-    public void setStreamingURL(String target);    
+    public void setStationID(int stationid);    
     
 }

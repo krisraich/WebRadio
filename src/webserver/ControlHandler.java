@@ -1,5 +1,6 @@
 package webserver;
 
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 import palyer.MediaPlayerControl;
@@ -32,6 +33,7 @@ public class ControlHandler extends AbstractRequestHandler{
     public void handle(HttpExchange he) throws IOException {
        
         String reqURI = he.getRequestURI().toString();
+        he.getResponseHeaders().add("Content-Type", "application/json");
         
        if(reqURI.equals(context + CMD_PAUSE)){
            this.mediaPlayerControl.pause();
@@ -48,7 +50,13 @@ public class ControlHandler extends AbstractRequestHandler{
        }else if(reqURI.equals(context + CMD_VOLDOWN)){
            this.mediaPlayerControl.volumeDown();
        }else if(reqURI.startsWith(context + CMD_SETSTREAM)){
-           this.mediaPlayerControl.setStreamingURL(reqURI.substring(context.length() + CMD_SETSTREAM.length()));
+           try{
+                int stationid = Integer.parseInt(reqURI.substring(context.length() + CMD_SETSTREAM.length()));
+                this.mediaPlayerControl.setStationID(stationid);
+           }catch(Exception e){
+               System.err.println("Cant parse station id");
+               this.sendError(he);
+           }
        }else{
            //default
            this.sendNotFound(he);
