@@ -1,5 +1,7 @@
 package webserver;
 
+import radio3.Util;
+
 /**
  *
  * @author Kris
@@ -25,23 +27,12 @@ public class CacheResponseHolder {
     }
    
     public static CacheResponseHolder createCacheResponseHolderFromURL(String requestURL, byte[] responsedata){
-        int lastindex =  requestURL.lastIndexOf(".");
-        String mimeType = "text/html";
         
-        if(requestURL.length() - lastindex < 5){
-            //fileextension gültig
-            String fileExtension = requestURL.substring(lastindex + 1);
-            
-            switch(fileExtension){
-                case "css": 
-                    mimeType =  "text/css";
-                    break;
-                case "js": 
-                    mimeType =  "application/javascript";
-                    break;
-            }
-        }
-        
+        String mimeTypeFromRessourceName = Util.getMimeTypeFromRessourceName(requestURL);
+       
+        //default
+        String mimeType = (mimeTypeFromRessourceName == null ? "text/html" : mimeTypeFromRessourceName);
+       
         return createCacheResponseHolderWithMimeType(mimeType, responsedata);
     }
    
