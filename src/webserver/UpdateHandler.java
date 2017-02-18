@@ -15,6 +15,7 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
     public static final String CMD_BLOCK = "/blocking";
     public static final String CMD_INSTANT = "/instant";
 
+    private volatile byte[] waitToSendByteArray;
     
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -33,7 +34,7 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
                 synchronized(this){
                     wait();
                     System.out.println("Sending state to: " + he.getRemoteAddress());
-                    this.sendData(he, PlayerState.getInstacnce().getStateForWebRequest());
+                    this.sendData(he, waitToSendByteArray);
                 }
             } catch (InterruptedException ex) {
                 System.err.println("Timeout while waiting");
@@ -52,6 +53,7 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
     public void update(Observable o, Object arg) {
 //        System.out.println("State changed. sending update.");
          synchronized(this){
+             waitToSendByteArray = (byte[])arg;
              notifyAll();
          }
     }
