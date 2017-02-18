@@ -21,8 +21,8 @@ public abstract class AbstractRequestHandler implements HttpHandler{
         send(he, data);
     }
      protected void sendTrue(HttpExchange he) throws IOException{
-        he.sendResponseHeaders(200, "ture".length());
-        send(he, "ture".getBytes());
+        he.sendResponseHeaders(200, "true".length());
+        send(he, "true".getBytes());
      }
     
     protected void sendNotFound(HttpExchange he) throws IOException{
@@ -32,9 +32,9 @@ public abstract class AbstractRequestHandler implements HttpHandler{
     }
     
     protected void sendError(HttpExchange he, String msg) throws IOException{
-        String response = ERROR_OCCURRED + msg + " " + he.getRequestURI().toString();
-        he.sendResponseHeaders(500, response.length());
-        send(he, response.getBytes());
+//        String response = ERROR_OCCURRED + msg + " " + he.getRequestURI().toString();
+        he.sendResponseHeaders(500, "false".length());
+        send(he, "false".getBytes());
     }
 
     private void send(HttpExchange he, byte[] data) throws IOException{

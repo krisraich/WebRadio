@@ -1,7 +1,5 @@
 package stations;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import org.xml.sax.Attributes;
@@ -14,8 +12,6 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class StationHandler extends DefaultHandler{
 
-//    private List<StationBean> stationBeans = new ArrayList();
-    
     private final SortedMap<Integer, StationBean> stationBeans = new TreeMap();
     
     private StationBean currentBean;
@@ -63,9 +59,5 @@ public class StationHandler extends DefaultHandler{
         }
         
     }
-    
-    
-    
-    
     
 }

@@ -55,6 +55,7 @@ public class MPlayerWrapper {
 
     public MPlayerWrapper(String pathToFifoFile) {
         this.processBuilder = new ProcessBuilder("mplayer", "-slave", "-input", "file=" + pathToFifoFile, StationManager.getInstance().getFirstEntryPath());
+        System.out.println(processBuilder.command());
     }
 
     public void start() {

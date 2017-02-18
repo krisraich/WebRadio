@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.*;
 
 /**
  *
@@ -13,7 +14,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Kris
  */
 public class StateReader extends Thread{
-
+//  Todo
+//    public static final Pattern ICY = Pattern.compile(".*StreamTitle='([^']+)';.*");
+    
     private final static PlayerState playerState = PlayerState.getInstacnce();
     private static StateReader currentInstance = null;
     
@@ -60,7 +63,9 @@ public class StateReader extends Thread{
                     continue;
                 }
                 
-                System.out.println("line: " + line);
+                if(! line.startsWith("A:")){
+                    System.out.println("line: " + line);
+                 }
                 /*
                 Outup der obigen line
                 line: MPlayer svn r34540 (Raspbian), built with gcc-4.6 (C) 2000-2012 MPlayer Team
@@ -105,20 +110,33 @@ line: A:   0.3 (00.2) of 0.0 (unknown) 13.7% 73%
                 
                 
                 if(line.startsWith("A:")){
-                    //player is alive
-                    playerState.updateIsPlaying();
+                    //player is alive & playing
+                    playerState.setPlaying(true);
+                    
+                }else if(line.contains("=====  PAUSE  =====")){
+                    //player is paused
+                    playerState.setPlaying(false);
+                    
                 }else if(line.startsWith("ICY Info:")){
-                    System.out.print("received icy info");
-                    playerState.setStreamTitle(line);
+                    //todo in regex
+                    line = line.substring(10).split(";")[0];
+                    if(line.length() > 0){
+                        line = line.substring(13);
+                        line = line.substring(0, line.length()-1);
+                        playerState.setStreamTitle(line);
+                    }
+                    
+                    
                 }else if(line.contains("Mute: disabled")){
-                    System.out.print("received mute info");
                     playerState.setMute(false);
-                }else if(line.contains("Mute:")){
-                    System.out.print("received mute2 info");
+                }else if(line.contains("Mute: enabled")){
                     playerState.setMute(true);
                 }else if(line.contains("Volume:")){
-                    System.out.print("received volume info");
-                    playerState.setVolume((byte)0);
+                    try {
+                        playerState.setVolume(Byte.parseByte(line.split(" ")[1]));
+                    } catch (NumberFormatException e) {
+                        System.err.println("Cant parse Volume");
+                    }
                 }
 
             }

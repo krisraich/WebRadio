@@ -17,7 +17,7 @@ public class ControlHandler extends AbstractRequestHandler{
     public static final String CMD_UNMUTE = "/unmute";
     public static final String CMD_VOLUP = "/volup";
     public static final String CMD_VOLDOWN = "/voldown";
-    public static final String CMD_SETSTREAM = "/setStream?path=";
+    public static final String CMD_SETSTREAM = "/setStream?id=";
     
     
     

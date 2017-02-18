@@ -1,10 +1,7 @@
 package palyer;
 
-import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import stations.StationBean;
 import stations.StationManager;
 
@@ -12,23 +9,27 @@ import stations.StationManager;
  *
  * @author Kris
  */
-public class MPlayerController implements MediaPlayerControl{
+public class MPlayerController implements MediaPlayerControl {
 
-    final private Path pathToFifoFile;
-    
+//    final private Path pathToFifoFile;
+    private final String pathToFifoFile;
+
     public MPlayerController(String pathToFifoFile) {
-        this.pathToFifoFile = new File(pathToFifoFile).toPath();
+        this.pathToFifoFile = pathToFifoFile;
     }
 
-    private synchronized void writeToFiFo(String cmd){
-        try {
-            System.out.println("Write cmd to fifo file..");
-            Files.write(pathToFifoFile, cmd.getBytes(), StandardOpenOption.WRITE);
+    private synchronized void writeToFiFo(String cmd) {
+        System.out.print("Write '" + cmd + "' to fifo file (" + pathToFifoFile + ")");
+        try (FileWriter fileWriter = new FileWriter(pathToFifoFile)) {
+            fileWriter.write(cmd);
+            fileWriter.write("\n");
+            fileWriter.flush();
+            System.out.println("... done");
         } catch (IOException ex) {
             System.err.println("FiFo File konnte nicht beschrieben werden: " + ex.getMessage());
         }
     }
-    
+
     @Override
     public void play() {
         pause();
@@ -69,13 +70,15 @@ public class MPlayerController implements MediaPlayerControl{
         try {
             int stationid = Integer.parseInt(target);
             StationBean stationBean = StationManager.getInstance().getStationByID(stationid);
-            if(stationBean == null) throw new NullPointerException("Station ID unbekannt");
+            if (stationBean == null) {
+                throw new NullPointerException("Station ID unbekannt");
+            }
             writeToFiFo("loadfile " + stationBean.getPath());
-            
+
         } catch (Exception e) {
             System.err.println("Station konnte nicht gewechselt werden: " + e.getMessage());
         }
-        
+
     }
-    
+
 }

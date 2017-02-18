@@ -2,394 +2,284 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
+    <head>
 
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="description" content="kleiner webradio">
-		<meta name="author" content="Web @ 2.21">
-		
-		<link rel="shortcut icon" type="image/png" href="/favicon.png">
-		
-		<title>Webradio</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="kleiner webradio">
+        <meta name="author" content="Web @ 2.21">
 
+        <link rel="shortcut icon" type="image/png" href="/favicon.png">
 
-		<link href="/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/css/4-col-portfolio.css" rel="stylesheet">
-		<!-- link href="/css/font-awesome.min.css" rel="stylesheet" -->
-
-		
-		<script>
-		function sendRequest(request, data = ""){
-			$.ajax({
-				url: "ajax.php",
-				type: "post",
-				data: {"q":request, "data":data} ,
-				success: function (response) {
-				   //console.log(response);
-				   //updateTitle();
-				   setCurrentActive();
-				},error: function(jqXHR, textStatus, errorThrown) {
-				   console.log(textStatus, errorThrown);
-				   //alert("Can't reach backend...");
-				}
-			});
-		}
-		
-		/*
-		function getChannels() {sendRequest("getChannels");}
-		function getTitle() {sendRequest("getTitle");}
-		*/
-		
-		function setChannel(str) {sendRequest("setChannel", str);}
-		function vUp() {sendRequest("vUp");}
-		function vDown() {sendRequest("vDown");}
-		function mute() {sendRequest("mute");}
-		function pause() {sendRequest("pause");}
-		</script>
-		
-	</head>
-
-	<body>
-
-		<!-- Navigation -->
-		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			<div class="container">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<!--button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button -->
-					<a class="navbar-brand" >FH - Radio</a>
-				</div>
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li>
-							<a href="#" onclick="$('body').addClass('body-dark')">Dark Theme</a>
-						</li>
-						<li>
-							<a href="#" onclick="$('body').removeClass()">Default Theme</a>
-						</li>
-					</ul>
-				</div>
-				<!-- /.navbar-collapse -->
-			</div>
-			<!-- /.container -->
-		</nav>
-
-		<!-- Page Content -->
-		<div class="container">
-
-		 <div class="row">
-				<div class="col-lg-12">
-					<h1 class="page-header">2.21 Webradio  <small id="currenttitle"></small></h1>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-12">
-					<h2 class="page-header">Volume Cöntröl
-						<!--<small>Secondary Text</small>-->
-					</h2>
-				</div>
-				<div class="col-lg-2 res-controls">
-				
-					<div class="btn-group" role="group" aria-label="Volume Controls">
-						  <button type="button" class="btn btn-default btn-lg" id="vup"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>
-						  <button type="button" class="btn btn-default btn-lg" id="vdown"><span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span></button>
-						  <button type="button" class="btn btn-default btn-lg" onclick="javascript: mute()"><span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span></button>
-					</div>
-					
-				</div>
-				
-				<div class="col-lg-8 text-center res-controls">
-					<div class="btn-group" role="group" aria-label="Playback Controls">
-						  <button type="button" class="btn btn-default btn-lg" onclick="javascript: pause()"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play/Stop</button>
-						  <button type="button" class="btn btn-default btn-lg" onclick="javascript: prevChannel()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Previous Channel</button>
-						  <button type="button" class="btn btn-default btn-lg" onclick="javascript: nextChannel()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Next Channel</button>
-						  <button type="button" class="btn btn-default btn-lg" onclick="javascript: rndChannel()"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Random Channel</button>
-					</div>
-				</div>
-				
-				<div class="col-lg-2 text-right res-controls">
-					<div class="btn-group" role="group" aria-label="General Controls">
-						  <button type="button" class="btn btn-default btn-lg" onclick="javascript: setCurrentActive()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh State</button>
-					</div>
-
-				</div>
-			</div>
-
-			<!-- Page Heading -->
-			<div class="row">
-				<div class="col-lg-12">
-					<h2 class="page-header">Switch Radio Statio</h2>
-				</div>
-			</div>
-			<!-- /.row -->
-
-			<!-- Projects Row -->
-			<div class="row">
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="0" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://cdn.antenne.de/thumbs/2016/08/classic-579f896538009.91c2c9af.png" alt="Rock Antenne - Classic Perln">
-							<p>Rock Antenne - Classic Perln</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="1" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://cdn.antenne.de/thumbs/2016/08/rockantenne-579f89654be42.91c2c9af.png" alt="Rock Antenne">
-							<p>Rock Antenne</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="2" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://cdn.antenne.de/thumbs/2016/08/heavymetal-579f896540c9c.91c2c9af.png" alt="Rock Antenne - Heavy Metal">
-							<p>Rock Antenne - Heavy Metal</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="3" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://www.rockradio1.com/themes/RD-GamerBlackV2/images/HDR/Text_Logo.png" alt="Rock Radio 1">
-							<p>Rock Radio 1</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="4" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://www.bassdrive.com/images/logo.png" alt="Basedrive">
-							<p>Basedrive</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="5" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://fm4.orf.at/v2static/images/fm4_logo.jpg" alt="FM4">
-							<p>FM4</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="6" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://radio.orf.at/player/images/tir-radio-47.png" alt="Radio Tirol">
-							<p>Radio Tirol</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="7" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="https://www.phonostar.de/images/auto_created/welle1_tirol2184x184.png" alt="Welle 1 Tirol">
-							<p>Welle 1 Tirol</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="8" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://www.radiodalmacija.hr/wp-content/uploads/2016/09/logo1.png" alt="Radio Dalmacija">
-							<p>Radio Dalmacija</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="9" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://yammat.fm/wp-content/uploads/2017/01/yammat-2017-logo.png" alt="YAMMAT FM">
-							<p>YAMMAT FM</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="10" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://www.nashvilletv.nl/wp-content/uploads/2016/07/beidelogos-wit.png" alt="Nashville FM">
-							<p>Nashville FM</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="11" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVqjBjflMsUtmN-vO8nHv7c1jXfDeR4EEZBejyHD4LckKKv0nzpA" alt="Irish Country Music Radio Studio 1 ">
-							<p>Irish Country Music Radio Studio 1 </p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="12" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://www.lounge.fm/wp-content/themes/loungefm_2014/img/LFM_Logo_800.png" alt="Lounge FM">
-							<p>Lounge FM</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="13" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://stream.psychomed.gr/images/logo.png" alt="Audiophile Audition - Lounge">
-							<p>Audiophile Audition - Lounge</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="14" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="https://placehold.it/400x300" alt="Lounge-Radio">
-							<p>Lounge-Radio</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="15" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://idobi.com/wp-content/themes/idobi-2015/i/station-logos/white/idobi-howl.png" alt="idobi Howl">
-							<p>idobi Howl</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="16" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://www.rockhausradio.de/images/rhr-logo.png" alt="Rockhaus Radio">
-							<p>Rockhaus Radio</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="17" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://www.redfm.gr/wp-content/uploads/2014/04/logo2.png" alt="Red - Rock Radio">
-							<p>Red - Rock Radio</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="18" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://www.radiogothic.net/theme/graphics/design/red/gothic_radio.png" alt="Radio Gothic">
-							<p>Radio Gothic</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6 portfolio-item-wrapper">
-					<div class="portfolio-item"  data-chid="19" >
-						<div class="center-stuff">
-							<img class="img-responsive" src="http://static.radio.at/images/broadcasts/92/8d/29418/c175.png" alt="1000 Goldies">
-							<p>1000 Goldies</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<hr>
-			<!-- Footer -->
-			<footer>
-				<div class="row">
-					<div class="col-lg-12">
-						<p>Radio - Fadio</p>
-					</div>
-				</div>
-				<!-- /.row -->
-			</footer>
-
-		</div>
-		<!-- /.container -->
-
-		<!-- jQuery -->
-		<script src="js/jquery.js"></script>
-
-		<!-- Bootstrap Core JavaScript -->
-		<script src="js/bootstrap.min.js"></script>
+        <title>Webradio</title>
 
 
-		<script>
-
-			jQuery.fn.random = function() {
-				var randomIndex = Math.floor(Math.random() * this.length);  
-				return jQuery(this[randomIndex]);
-			};
-
-			var clock;
-			$( "#vdown" )
-				.mouseup(function() {
-					clearInterval(clock);
-				})
-				.mousedown(function() {
-					vDown();
-					clock = setInterval(vDown, 200);
-			});
-
-			$( "#vup" )
-				 .mouseup(function() {
-						clearInterval(clock);
-				 })
-				 .mousedown(function() {
-					vUp();
-					clock = setInterval(vUp, 200);
-			});
-
-			$(".portfolio-item").click(function(){
-				setChannel($(this).data("chid"));
-			});
-			  
-			function updateTitle(isInit){
-					$.get( "/getTitle.php?block=" + isInit + "&t=" + new Date().getTime(), function( data ) {
-						$("#currenttitle").text(data);
-						document.title = data + " - Webradio" ;
-//						updateTitle(true);
-						setCurrentActive();
-					});
-			}
-			setInterval(function(){
-				updateTitle(false);
-			}, 10000);
-
-			function setCurrentActive(){
-				$.get( "/currentStation", function( data ) {
-					$(".portfolio-item").removeClass("active");
-					$(".portfolio-item[data-chid='" + data + "']").addClass("active");
-				});
-			}
-			setCurrentActive();
-
-			function prevChannel(){
-				var chid = $(".portfolio-item.active").parent().prev().find(".portfolio-item").data("chid");
-				if(!chid){
-					chid = $(".portfolio-item-wrapper:last-of-type .portfolio-item").data("chid");
-				}
-				setChannel(chid);
-			}
-			function nextChannel(){
-				var chid = $(".portfolio-item.active").parent().next().find(".portfolio-item").data("chid");
-				if(!chid){
-					chid = $(".portfolio-item-wrapper:first-of-type .portfolio-item").data("chid");
-				}
-				setChannel(chid);
-			}
-			function rndChannel(){
-				setChannel($(".portfolio-item:not(.active)").random().data("chid"));
-			}
+        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/css/4-col-portfolio.css" rel="stylesheet">
+        <!-- link href="/css/font-awesome.min.css" rel="stylesheet" -->
 
 
-		</script>
+        <!--        <script>
+                    function sendRequest(request, data = ""){
+                        $.ajax({
+                            url: "ajax.php",
+                            type: "post",
+                            data: {"q": request, "data": data},
+                            success: function (response) {
+                                //console.log(response);
+                                //updateTitle();
+                                setCurrentActive();
+                            }, error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(textStatus, errorThrown);
+                                //alert("Can't reach backend...");
+                            }
+                        });
+                    }
+        
+                    /*
+                     function getChannels() {sendRequest("getChannels");}
+                     function getTitle() {sendRequest("getTitle");}
+                     */
+        
+                    function setChannel(str) {
+                        sendRequest("setChannel", str);
+                    }
+                    function vUp() {
+                        sendRequest("vUp");
+                    }
+                    function vDown() {
+                        sendRequest("vDown");
+                    }
+                    function mute() {
+                        sendRequest("mute");
+                    }
+                    function pause() {
+                        sendRequest("pause");
+                    }
+                </script>-->
+
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <!--button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                    </button -->
+                    <a class="navbar-brand" >FH - Radio</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#" onclick="$('body').addClass('body-dark')">Dark Theme</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="$('body').removeClass()">Default Theme</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">2.21 Webradio  <small id="currenttitle"></small></h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header">Volume Cöntröl
+                        <!--<small>Secondary Text</small>-->
+                    </h2>
+                </div>
+                <div class="col-lg-2 res-controls">
+
+                    <div class="btn-group" role="group" aria-label="Volume Controls">
+                        <button type="button" class="btn btn-default btn-lg" id="vup"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default btn-lg" id="vdown"><span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: mute()"><span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span></button>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-8 text-center res-controls">
+                    <div class="btn-group" role="group" aria-label="Playback Controls">
+                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: pause()"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play/Stop</button>
+                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: prevChannel()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Previous Channel</button>
+                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: nextChannel()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Next Channel</button>
+                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: rndChannel()"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Random Channel</button>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 text-right res-controls">
+                    <div class="btn-group" role="group" aria-label="General Controls">
+                        <button type="button" class="btn btn-default btn-lg" onclick="javascript: setCurrentActive()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh State</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="page-header">Switch Radio Statio</h2>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <!-- Projects Row -->
+            <div id="stationlist" class="row">
+
+            </div>
+
+            <hr>
+            <!-- Footer -->
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Radio - Fadio</p>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </footer>
+
+        </div>
+        <!-- /.container -->
+
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
 
 
-	</body>
+        <script>
+            /*jquery extensions*/
+
+            jQuery.fn.random = function () {
+                var randomIndex = Math.floor(Math.random() * this.length);
+                return jQuery(this[randomIndex]);
+            };
+
+
+            /* init ui*/
+            
+           
+            $.get( "/getStationList", function( data ) {
+                data = JSON.parse(data);
+                for (var i = 0; i < data.length; i++) {
+                   var current = data[i];
+                   $( "#stationlist" ).append( 
+                    '<div class="col-md-3 col-sm-6 portfolio-item-wrapper"><div class="portfolio-item" data-chid="' + current.id + '" ><div class="center-stuff"><img class="img-responsive" src="' +current.img + '" alt="' + current.desc + '"><p>' + current.desc + '</p></div></div></div>'       
+                    );
+               }
+            });
+
+            function updatePlayerState(data){
+                data = JSON.parse(data);
+                console.log("update player");
+                $("#currenttitle").text(data.title);
+                document.title = data.title + " - Webradio";
+                
+                //blocking request
+                var random = Math.floor((Math.random() * 1000) + 1);
+                $.get( "/update/blocking/" + random ,updatePlayerState);
+            }
+
+            $.get( "/update/instant",updatePlayerState);
+            
+            
+            function sendCmd(cmd){
+                $.get("/control/" + cmd);
+            }
+            
+            
+            function vDown(){
+                sendCmd("voldown");
+            }
+            function vUp(){
+                sendCmd("volup");
+            }
+            function setChannel(id){
+                sendCmd("setStream?id=" + id);
+            }
+            function mute() {
+                sendCmd("mute");
+            }
+            function pause() {
+                sendCmd("pause");
+            }
+
+            var clock;
+            $("#vdown")
+                    .mouseup(function () {
+                        clearInterval(clock);
+                    })
+                    .mousedown(function () {
+                        vDown();
+                        clock = setInterval(vDown, 200);
+                    });
+
+            $("#vup")
+                    .mouseup(function () {
+                        clearInterval(clock);
+                    })
+                    .mousedown(function () {
+                        vUp();
+                        clock = setInterval(vUp, 200);
+                    });
+
+            $(".portfolio-item").click(function () {
+                setChannel($(this).data("chid"));
+            });
+
+
+//            function setCurrentActive() {
+//                $.get("/currentStation", function (data) {
+//                    $(".portfolio-item").removeClass("active");
+//                    $(".portfolio-item[data-chid='" + data + "']").addClass("active");
+//                });
+//            }
+//            setCurrentActive();
+
+            function prevChannel() {
+                var chid = $(".portfolio-item.active").parent().prev().find(".portfolio-item").data("chid");
+                if (!chid) {
+                    chid = $(".portfolio-item-wrapper:last-of-type .portfolio-item").data("chid");
+                }
+                setChannel(chid);
+            }
+            function nextChannel() {
+                var chid = $(".portfolio-item.active").parent().next().find(".portfolio-item").data("chid");
+                if (!chid) {
+                    chid = $(".portfolio-item-wrapper:first-of-type .portfolio-item").data("chid");
+                }
+                setChannel(chid);
+            }
+            function rndChannel() {
+                setChannel($(".portfolio-item:not(.active)").random().data("chid"));
+            }
+
+
+        </script>
+
+
+    </body>
 
 </html>
 

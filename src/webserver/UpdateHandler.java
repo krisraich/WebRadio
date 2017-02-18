@@ -10,7 +10,7 @@ import palyer.state.PlayerState;
  *
  * @author Kris
  */
-public class NotifyHandler extends AbstractRequestHandler implements Observer{
+public class UpdateHandler extends AbstractRequestHandler implements Observer{
 
     public static final String CMD_BLOCK = "/blocking";
     public static final String CMD_INSTANT = "/instant";
@@ -25,10 +25,19 @@ public class NotifyHandler extends AbstractRequestHandler implements Observer{
            
            this.sendData(he, PlayerState.getInstacnce().getStateForWebRequest());
            
-       }else if(reqURI.equals(context + CMD_BLOCK)){
+       }else if(reqURI.startsWith(context + CMD_BLOCK)){
            
-            waitForUpdate(he);
-            System.out.println("Sending Update - awake");
+           try {
+                synchronized(this){
+                    wait();
+                    System.out.println("Sending Update - awake");
+                    this.sendData(he, PlayerState.getInstacnce().getStateForWebRequest());
+                }
+            } catch (InterruptedException ex) {
+                this.sendError(he, "Timeout while waiting");
+            }
+           
+            
        }else {
            //default
            this.sendNotFound(he);
@@ -36,18 +45,12 @@ public class NotifyHandler extends AbstractRequestHandler implements Observer{
 
     }
     
-    private synchronized void waitForUpdate(HttpExchange he) throws IOException{
-        try {
-            wait();
-            this.sendData(he, PlayerState.getInstacnce().getStateForWebRequest());
-        } catch (InterruptedException ex) {
-            this.sendError(he, "Timeout while waiting");
-        }
-    }
 
     @Override
-    public synchronized void update(Observable o, Object arg) {
+    public void update(Observable o, Object arg) {
         System.out.println("Sending Update - notifyAll");
-        notifyAll();
+         synchronized(this){
+             notifyAll();
+         }
     }
 }

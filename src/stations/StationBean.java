@@ -16,7 +16,7 @@ public class StationBean {
     @Override
     public String toString() {
                 return "ID: " + this.id + 
-                "\r\nURL: " + this.desc +
+                "\r\nURL: " + this.path +
                 "\r\nBeschreibung: " + this.desc +
                 "\r\nBild URL: " + this.img;
     }

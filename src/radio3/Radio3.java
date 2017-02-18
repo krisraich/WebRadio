@@ -7,7 +7,7 @@ import palyer.state.PlayerState;
 import palyer.state.StateReader;
 import stations.StationManager;
 import webserver.ControlHandler;
-import webserver.NotifyHandler;
+import webserver.UpdateHandler;
 import webserver.WebServer;
 
 
@@ -25,13 +25,14 @@ import webserver.WebServer;
  *     /getStationList
  * 
  *   Status des players:
- *      /update/blocking (Blockiert bis sich status ändert)
+ *      /update/blocking/*random-id* (Blockiert bis sich status ändert, benötigt random-ID fürs threading)
  *      /update/instant
  * 
  *   Steuerung des Players
+ *      /control/stop //startet player neu!
  *      /control/pause
  *      /control/play
- *      /control/setStream?path=http://mp3channels.webradio.rockantenne.de/classic-perlen.aac
+ *      /control/setStream?id=2
  *      (Siehe ControlHandler.java)
  * 
  * 
@@ -95,7 +96,7 @@ public class Radio3 {
         
         
         // -------- Starte MPlayaer Notifyer ---------   
-        NotifyHandler notifyHandler = new NotifyHandler();
+        UpdateHandler notifyHandler = new UpdateHandler();
         server.addContext("/update", notifyHandler);
         
         
@@ -105,7 +106,6 @@ public class Radio3 {
 
         
         // -------- Starte den stuff ---------
-        playerState.startWatching();
         mPlayerWrapper.start();
         
         
@@ -116,7 +116,6 @@ public class Radio3 {
         
         // -------- Stoppe den  stuff ---------
         mPlayerWrapper.stop();
-        playerState.stopWatching();
         StateReader.stopProcessing();
         server.stop();
         
