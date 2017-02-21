@@ -52,6 +52,10 @@ public class PlayerState extends Observable{
     }
 
     public void setVolume(byte volume) {
+        if(volume > 0){
+            mute = false;
+        }
+        
         if(this.volume != volume){
             this.volume = volume;
             checkedNotifyObserver();
@@ -63,6 +67,10 @@ public class PlayerState extends Observable{
     }
 
     public void setMute(boolean mute) {
+        if(mute){
+            this.volume = 0;
+        }
+        
         if(this.mute != mute){
             this.mute = mute;
             checkedNotifyObserver();
