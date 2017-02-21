@@ -5,6 +5,7 @@
 
 # Package Files #
 *.jar
+!Radio3.jar
 *.war
 *.ear
 
@@ -12,5 +13,3 @@
 hs_err_pid*
 /nbproject/private/
 /build/
-
-!/dist/Radio3.jar
