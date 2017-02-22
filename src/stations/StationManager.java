@@ -1,5 +1,7 @@
 package stations;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -8,6 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
+import radio3.Radio3;
 
 /**
  *
@@ -16,7 +19,12 @@ import org.xml.sax.SAXException;
 public class StationManager {
 
     private static StationManager instance;
-
+    private static String filePathToStationsXML = null;
+    
+    public static void setFilePathToStationsXML(String filepath){
+        filePathToStationsXML = filepath;
+    }
+    
     public static synchronized StationManager getInstance() {
         if (instance == null) {
             instance = new StationManager();
@@ -27,11 +35,21 @@ public class StationManager {
     private SortedMap<Integer, StationBean> stationBeans; 
     
     private StationManager() {
-        InputStream is = getClass().getResourceAsStream("stations.xml");
+        InputStream is;
+        if(StationManager.filePathToStationsXML == null){
+            is = getDefaultInputStream();
+        }else{
+            try {
+                is = new FileInputStream(filePathToStationsXML);
+            } catch (FileNotFoundException ex) {
+                System.err.println("Cant find Stations XML.. using Default");
+                is = getDefaultInputStream();
+            }
+        }
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         try {
-
+            if(Radio3.DEV_MODE) System.out.println("Parsing stations xml...");
             SAXParser saxParser = factory.newSAXParser();
             StationHandler handler = new StationHandler();
             saxParser.parse(is, handler);
@@ -45,6 +63,10 @@ public class StationManager {
 
     }
 
+    private InputStream getDefaultInputStream(){
+        return getClass().getResourceAsStream("stations.xml");
+    }
+    
     public synchronized byte[] getBeansAsJsonArray(){
         StringBuilder sb = new StringBuilder();
         sb.append("[");

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 import player.state.PlayerState;
+import radio3.Radio3;
 
 /**
  *
@@ -33,7 +34,7 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
            try {
                 synchronized(this){
                     wait();
-                    System.out.println("Sending state to: " + he.getRemoteAddress());
+                    if(Radio3.DEV_MODE) System.out.println("Sending state to: " + he.getRemoteAddress());
                     this.sendData(he, waitToSendByteArray);
                 }
             } catch (InterruptedException ex) {
@@ -51,8 +52,8 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-//        System.out.println("State changed. sending update.");
-         synchronized(this){
+        if(Radio3.DEV_MODE) System.out.println("State changed. sending update.");
+        synchronized(this){
              waitToSendByteArray = (byte[])arg;
              notifyAll();
          }

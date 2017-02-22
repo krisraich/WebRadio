@@ -30,7 +30,7 @@ public class MPlayerWrapper {
 
                     process.waitFor();
                     if (isPlaying.get()) {
-                        System.out.println("Mplayer crashed.. Restarting");
+                        System.out.println("Mplayer has stopped.. Restarting");
                         Thread.sleep(1000);
 
                     }
@@ -55,7 +55,6 @@ public class MPlayerWrapper {
 
     public MPlayerWrapper(String pathToFifoFile) {
         this.processBuilder = new ProcessBuilder("mplayer", "-slave", "-input", "file=" + pathToFifoFile, StationManager.getInstance().getFirstEntryPath());
-        System.out.println(processBuilder.command());
     }
 
     public void start() {

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.concurrent.atomic.AtomicBoolean;
+import radio3.Radio3;
 
 /**
  *
@@ -63,9 +64,9 @@ public class StateReader extends Thread{
                     continue;
                 }
                 
-//                if(! line.startsWith("A:")){
-//                    System.out.println("line: " + line);
-//                 }
+                if( Radio3.DEV_MODE && ! line.startsWith("A:")){
+                    System.out.println("line: " + line);
+                 }
 
                 
                 //TODO: Regex by BOB

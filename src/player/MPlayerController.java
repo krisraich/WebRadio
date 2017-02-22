@@ -3,6 +3,7 @@ package player;
 import java.io.FileWriter;
 import java.io.IOException;
 import player.state.PlayerState;
+import radio3.Radio3;
 import stations.StationBean;
 import stations.StationManager;
 
@@ -20,13 +21,12 @@ public class MPlayerController implements MediaPlayerControl {
     }
 
     private synchronized void writeToFiFo(String cmd) {
-//        System.out.print("Write '" + cmd + "' to fifo file (" + pathToFifoFile + ")");
-//        System.out.print("Send cmd to player");
+        if(Radio3.DEV_MODE)  System.out.print("Write '" + cmd + "' to fifo file (" + pathToFifoFile + ")");
         try (FileWriter fileWriter = new FileWriter(pathToFifoFile)) {
             fileWriter.write(cmd);
             fileWriter.write("\n"); //nicht vergessen!!
             fileWriter.flush();
-//            System.out.println("... done");
+        if(Radio3.DEV_MODE) System.out.println("... done");
         } catch (IOException ex) {
             System.err.println("FiFo File konnte nicht beschrieben werden: " + ex.getMessage());
         }

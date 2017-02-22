@@ -4,6 +4,7 @@ import com.sun.net.httpserver.*;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
+import radio3.Radio3;
 
 
 /**
@@ -38,6 +39,7 @@ public class WebServer {
      }
     
     public void stop(){
+        if(Radio3.DEV_MODE) System.out.println("Stopping webserver");
         server.stop(0);
     }
 

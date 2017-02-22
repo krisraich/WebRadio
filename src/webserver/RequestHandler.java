@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import radio3.Radio3;
 import stations.StationManager;
 
 /**
@@ -37,11 +38,13 @@ public class RequestHandler extends AbstractRequestHandler {
         }
         
         if(! FILE_CACHE.containsKey(reqURI)){
+            if(Radio3.DEV_MODE) System.out.println("Adding to file Cache: " + reqURI);
             
             InputStream is = getClass().getResourceAsStream("/webserver/ressource" +  reqURI);
             
             if(is == null){
                 this.sendNotFound(he);
+                if(Radio3.DEV_MODE) System.out.println("File not found: " + reqURI);
                 return;
             }
             
