@@ -86,7 +86,10 @@ public class Util {
                 
             case "css":     return "text/css";
             case "js":      return  "application/javascript";
-            case "json":    return  "application/json";
+            
+            case "map":
+            case "json":    
+                            return  "application/json";
 
             case "png":     return  "image/png";
             case "svg":     return  "image/svg+xml";

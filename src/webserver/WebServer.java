@@ -3,7 +3,6 @@ package webserver;
 import com.sun.net.httpserver.*;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
@@ -14,7 +13,6 @@ import java.util.concurrent.Executors;
 public class WebServer {
     
      private HttpServer server;
-     private ExecutorService executorService;
      private final int port;
 
     public WebServer() {
@@ -29,8 +27,7 @@ public class WebServer {
     public void start() throws IOException{
         server = HttpServer.create(new InetSocketAddress(port), 0);
         addContext("/", new RequestHandler());
-        executorService = Executors.newCachedThreadPool();
-        server.setExecutor(executorService);
+        server.setExecutor(Executors.newCachedThreadPool());
         server.start();
 
     }
@@ -42,7 +39,6 @@ public class WebServer {
     
     public void stop(){
         server.stop(0);
-        executorService.shutdownNow();
     }
 
     public int getPort() {

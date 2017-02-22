@@ -28,6 +28,7 @@ public class StateReader extends Thread{
     public static synchronized void bindInputStreamAndProcess(InputStream inputStream){
         stopProcessing();
         currentInstance = new StateReader(inputStream);
+        currentInstance.setDaemon(true);
         currentInstance.start();
     }
     
@@ -109,7 +110,6 @@ public class StateReader extends Thread{
         }catch (InterruptedException interruptedException){
             //Programm has terminated
         }
-        
     }
 }
 
