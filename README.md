@@ -9,4 +9,4 @@ __Disclaimer: Not tested, only available as nightly builds, no guarantee or what
 ##Installation
 1. Install [mplayer](https://wiki.ubuntuusers.de/MPlayer/)
 2. Create a named pipe (aka fifo File) __mkfifo fifo__
-3. Run __java -jar Radio3.jar -c=pathToPipe__
+3. Run __java -jar Radio3.jar -c=pathToPipe [-p=8080 optional web server port. Default: 80]__ 
