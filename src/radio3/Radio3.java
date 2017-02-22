@@ -1,8 +1,8 @@
 package radio3;
 
 import java.io.IOException;
-import palyer.MPlayerController;
-import palyer.MPlayerWrapper;
+import player.MPlayerController;
+import player.MPlayerWrapper;
 import palyer.state.PlayerState;
 import palyer.state.StateReader;
 import webserver.ControlHandler;

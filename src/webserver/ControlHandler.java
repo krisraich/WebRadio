@@ -3,7 +3,7 @@ package webserver;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
-import palyer.MediaPlayerControl;
+import player.MediaPlayerControl;
 
 /**
  *
