@@ -68,8 +68,9 @@ public class Radio3 {
                 System.out.println("Using Pipe: " + fifoFilePath);
             }
             if(currentArgument.toLowerCase().startsWith("s=")){
-                StationManager.setFilePathToStationsXML(fifoFilePath);
-                System.out.println("Using File For Stations XML: " + fifoFilePath);
+                String pathToXML = currentArgument.substring(2);
+                StationManager.setFilePathToStationsXML(pathToXML);
+                System.out.println("Using File For Stations XML: " + pathToXML);
             }
         }
 
