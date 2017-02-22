@@ -18,7 +18,7 @@ import webserver.WebServer;
  * Argumente
  *  p= ist die portnummer vom Webserver (default ist 80)
  *  c= pfad zum fifofile für die steuerung
- *  s= pfad zum station XML für andere webradios
+ *  s= pfad zum station XML für andere webradios (siehe stations/stations.xml)
  * 
  * startet einen Webserver
  * 
@@ -45,12 +45,9 @@ public class Radio3 {
     
     /**
      * @param args the command line arguments
-     * @throws java.io.IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-//        args = new String[]{"p=8080"};
-        
         // -------- DEFAULTS ---------
         int port = 80; //default Port
         String fifoFilePath = null;
@@ -83,7 +80,12 @@ public class Radio3 {
         System.out.println("starting [enter to stop]");
         
         WebServer server = new WebServer(port);
-        server.start();
+        try {
+            server.start();
+        } catch (IOException ex) {
+            System.out.println("Can't start web server. Maybe another program is running on this port? " + ex.getMessage());
+            return;
+        }
         
         if(Radio3.DEV_MODE) System.out.println("done. Webserver adress: " + server.getSocketAddress().toString());
         
@@ -115,11 +117,14 @@ public class Radio3 {
         
         
         
-        System.in.read();
+        try {
+            System.in.read();
+        } catch (IOException ex) {}
+        
         System.out.println("stopping..");
         
         
-        // -------- Stoppe den  stuff ---------
+        // -------- Stoppe den stuff ---------
         mPlayerWrapper.stop();
         StateReader.stopProcessing();
         server.stop();
