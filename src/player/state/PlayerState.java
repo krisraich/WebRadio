@@ -1,4 +1,4 @@
-package palyer.state;
+package player.state;
 
 import java.util.Observable;
 import radio3.Util;

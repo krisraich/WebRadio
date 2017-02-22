@@ -2,7 +2,7 @@ package player;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import palyer.state.PlayerState;
+import player.state.PlayerState;
 import stations.StationBean;
 import stations.StationManager;
 

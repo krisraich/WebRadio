@@ -4,7 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-import palyer.state.PlayerState;
+import player.state.PlayerState;
 
 /**
  *

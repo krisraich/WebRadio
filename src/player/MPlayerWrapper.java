@@ -2,7 +2,7 @@ package player;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
-import palyer.state.StateReader;
+import player.state.StateReader;
 import stations.StationManager;
 
 /**
