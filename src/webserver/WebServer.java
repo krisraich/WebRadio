@@ -18,6 +18,7 @@ public class WebServer {
      private final int port;
 
     public WebServer() {
+        //default
         this(80);
     }
 
@@ -40,7 +41,7 @@ public class WebServer {
      }
     
     public void stop(){
-        server.stop(1);
+        server.stop(0);
         executorService.shutdownNow();
     }
 

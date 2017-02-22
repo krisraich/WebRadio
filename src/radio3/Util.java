@@ -72,10 +72,7 @@ public class Util {
      * @return 
      */
     public static String getMimeTypeFromRessourceName(String fileName){
-        int lastindex =  fileName.lastIndexOf(".");
-        
-        //fileextension gültig
-        String fileExtension = fileName.substring(lastindex + 1).toLowerCase();
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
 
         switch(fileExtension){
             case "htm": 
