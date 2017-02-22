@@ -122,7 +122,7 @@ public class Radio3 {
             System.in.read();
         } catch (IOException ex) {}
         
-        System.out.println("stopping..");
+        System.out.println("stopping...");
         
         
         // -------- Stoppe den stuff ---------
