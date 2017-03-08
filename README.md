@@ -9,7 +9,7 @@ __Disclaimer: Not tested, only available as nightly builds, no guarantee or what
 ##Installation
 1. Install [mplayer](https://wiki.ubuntuusers.de/MPlayer/)
 2. Create a named pipe (aka fifo File) __mkfifo fifo__
-3. Run __java -jar Radio3.jar -c=pathToPipe [-p=8080 optional web server port. Default: 80]__ #
+3. Run __java -jar Radio3.jar c=pathToPipe [p=8080 optional web server port. Default: 80]__ #
 
 ###Run Radio on start
 
@@ -20,8 +20,8 @@ __Disclaimer: Not tested, only available as nightly builds, no guarantee or what
     //Add script to crontab (crontab -e)
     @reboot pathtoscript
 
-    //some usefull commands
-	apt-get update
+    //some useful commands
+    apt-get update
     apt-get install authbind mplayer nohub                        
     sudo touch /etc/authbind/byport/80
     sudo chown radioUser /etc/authbind/byport/80
