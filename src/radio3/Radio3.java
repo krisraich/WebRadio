@@ -48,6 +48,10 @@ public class Radio3 {
      */
     public static void main(String[] args) {
 
+        
+        
+        
+        
         // -------- DEFAULTS ---------
         int port = 80; //default Port
         String fifoFilePath = null;
@@ -84,7 +88,7 @@ public class Radio3 {
         try {
             server.start();
         } catch (IOException ex) {
-            System.out.println("Can't start web server. Maybe another program is running on this port? " + ex.getMessage());
+            System.err.println("Can't start web server. Maybe another program is running on this port? " + ex.getMessage());
             return;
         }
         
@@ -118,19 +122,22 @@ public class Radio3 {
         
         
         
-        try {
-            System.in.read();
-        } catch (IOException ex) {}
+        Thread shutdownHook = new Thread(() -> {
+            try {
+                System.out.println("stopping...");
+                
+                // -------- Stoppe den stuff ---------
+                mPlayerWrapper.stop();
+                StateReader.stopProcessing();
+                server.stop();
+                
+            } catch (Throwable e) {
+                //nothing
+            }
+        });
+        shutdownHook.setName("Shutdown Hook");
         
-        System.out.println("stopping...");
-        
-        
-        // -------- Stoppe den stuff ---------
-        mPlayerWrapper.stop();
-        StateReader.stopProcessing();
-        server.stop();
-        
+        Runtime.getRuntime().addShutdownHook(shutdownHook);
     }
-    
 }
 

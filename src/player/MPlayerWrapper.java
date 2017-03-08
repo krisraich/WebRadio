@@ -30,7 +30,7 @@ public class MPlayerWrapper {
 
                     process.waitFor();
                     if (isPlaying.get()) {
-                        System.out.println("Mplayer has stopped.. Restarting");
+                        System.err.println("Mplayer has stopped.. Restarting");
                         Thread.sleep(1000);
 
                     }
