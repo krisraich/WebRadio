@@ -19,6 +19,7 @@ import webserver.WebServer;
  *  p= ist die portnummer vom Webserver (default ist 80)
  *  c= pfad zum fifofile für die steuerung
  *  s= pfad zum station XML für andere webradios (siehe stations/stations.xml)
+ *  --debug Debug Infos
  * 
  * startet einen Webserver
  * 
@@ -49,9 +50,6 @@ public class Radio3 {
     public static void main(String[] args) {
 
         
-        
-        
-        
         // -------- DEFAULTS ---------
         int port = 80; //default Port
         String fifoFilePath = null;
@@ -59,7 +57,7 @@ public class Radio3 {
         
         // ------- PARS ARGS ---------
         for (String currentArgument : args) {
-            if(currentArgument.toLowerCase().equals("debug")){
+            if(currentArgument.toLowerCase().equals("--debug")){
                Radio3.DEV_MODE = true;
             }
             
@@ -126,7 +124,7 @@ public class Radio3 {
         // -------- Starte den stuff ---------
         mPlayerWrapper.start();
         
-        Thread shutdownHook = new Thread(() -> {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 System.out.println("stopping...");
                 
@@ -139,10 +137,7 @@ public class Radio3 {
                 System.err.println("Error while cleaning up: " + e.getMessage());
                 //nothing
             }
-        });
-        shutdownHook.setName("Shutdown Hook");
-        
-        Runtime.getRuntime().addShutdownHook(shutdownHook);
+        }));
     }
 }
 
