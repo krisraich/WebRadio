@@ -106,7 +106,7 @@ public class StateReader extends Thread{
 
         } catch (IOException iOException) {
             //read line wirft IO Exception.. Stream ist geschlossen
-             System.err.println("Lost Programm output");
+             System.err.println("Lost Programm output: " + iOException.getMessage());
 //             ex.printStackTrace();
         }catch (InterruptedException interruptedException){
             //Programm has terminated

@@ -41,7 +41,7 @@ import webserver.WebServer;
  */
 public class Radio3 {
 
-    public static final boolean DEV_MODE = false;    
+    public static boolean DEV_MODE = false;    
     
     /**
      * @param args the command line arguments
@@ -59,6 +59,10 @@ public class Radio3 {
         
         // ------- PARS ARGS ---------
         for (String currentArgument : args) {
+            if(currentArgument.toLowerCase().equals("debug")){
+               Radio3.DEV_MODE = true;
+            }
+            
             if(currentArgument.toLowerCase().startsWith("p=")){
                 try {
                     port = Integer.parseInt(currentArgument.substring(2));
@@ -67,10 +71,12 @@ public class Radio3 {
                     System.err.println("Cant parse port number");
                 }
             }
+            
             if(currentArgument.toLowerCase().startsWith("c=")){
                 fifoFilePath = currentArgument.substring(2);
                 System.out.println("Using Pipe: " + fifoFilePath);
             }
+            
             if(currentArgument.toLowerCase().startsWith("s=")){
                 String pathToXML = currentArgument.substring(2);
                 StationManager.setFilePathToStationsXML(pathToXML);
@@ -82,7 +88,7 @@ public class Radio3 {
         
         // -------- Starte Webserver ---------
         
-        System.out.println("starting [enter to stop]");
+        System.out.println("starting awesome webraido");
         
         WebServer server = new WebServer(port);
         try {
@@ -120,8 +126,6 @@ public class Radio3 {
         // -------- Starte den stuff ---------
         mPlayerWrapper.start();
         
-        
-        
         Thread shutdownHook = new Thread(() -> {
             try {
                 System.out.println("stopping...");
@@ -132,6 +136,7 @@ public class Radio3 {
                 server.stop();
                 
             } catch (Throwable e) {
+                System.err.println("Error while cleaning up: " + e.getMessage());
                 //nothing
             }
         });
