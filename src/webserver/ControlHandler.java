@@ -3,6 +3,7 @@ package webserver;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 import player.MediaPlayerControl;
+import radio3.Radio3;
 
 /**
  *
@@ -33,6 +34,10 @@ public class ControlHandler extends AbstractRequestHandler{
        
         String reqURI = he.getRequestURI().toString();
         he.getResponseHeaders().add("Content-Type", "application/json");
+        
+        if( Radio3.DEV_MODE){
+            System.out.println("Received cmd '" + reqURI + "' from: " + he.getRemoteAddress());
+        }
         
        if(reqURI.equals(context + CMD_PAUSE)){
            this.mediaPlayerControl.pause();

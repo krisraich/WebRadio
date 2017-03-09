@@ -64,9 +64,9 @@ public class StateReader extends Thread{
                     continue;
                 }
                 
-                if( Radio3.DEV_MODE && ! line.startsWith("A:")){
-                    System.out.println("line: " + line);
-                 }
+//                if( Radio3.DEV_MODE && ! line.startsWith("A:")){
+//                    System.out.println("line: " + line);
+//                 }
 
                 
                 //TODO: Regex by BOB
