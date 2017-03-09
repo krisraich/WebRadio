@@ -29,7 +29,10 @@ public class ChatHandler extends AbstractRequestHandler {
             byte[] buffer = new byte[4000]; //max 2000 chars
             int read;
             try {
+                
                 read = he.getRequestBody().read(buffer, 0, buffer.length);
+                if(read == 0) throw new IOException("Message null");
+                
             } catch (IOException e) {
                 this.sendError(he);
                 return;
