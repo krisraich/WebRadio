@@ -24,6 +24,10 @@ public abstract class AbstractRequestHandler implements HttpHandler{
         he.sendResponseHeaders(200, "true".length());
         send(he, "true".getBytes());
      }
+     protected void sendFalse(HttpExchange he) throws IOException{
+        he.sendResponseHeaders(200, "false".length());
+        send(he, "false".getBytes());
+     }
     
     protected void sendNotFound(HttpExchange he) throws IOException{
         String response = FILE_NOT_FOUND + he.getRequestURI().toString();

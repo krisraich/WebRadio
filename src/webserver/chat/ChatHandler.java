@@ -17,6 +17,8 @@ public class ChatHandler extends AbstractRequestHandler {
     public static final String CMD_BLOCK = "/blocking";
     public static final String CMD_INSTANT = "/instant";
 
+    public static final int MAX_CHAT_LENGTH = 1000;
+    
     private final ChatStack chatStack = new ChatStack(30);
 
     @Override
@@ -27,38 +29,43 @@ public class ChatHandler extends AbstractRequestHandler {
         if (reqURI.equals(context + CMD_ADD) && he.getRequestMethod().equalsIgnoreCase("POST")) {
             
             he.getResponseHeaders().add("Content-Type", "application/json");
-            
-            byte[] buffer;
+            String msg;
+           
             try {
-                
+                byte[] buffer;
                 Headers requestHeaders = he.getRequestHeaders();
 //                Set<Map.Entry<String, List<String>>> entries = requestHeaders.entrySet();
-                int contentLength = Integer.parseInt(requestHeaders.getFirst("Content-length"));
+                if(requestHeaders.containsKey("Content-length")){
+                    int contentLength = 
+                            Math.max(
+                                MAX_CHAT_LENGTH,
+                                Integer.parseInt(requestHeaders.getFirst("Content-length"))
+                            );
+                    if (Radio3.DEV_MODE) System.out.println("Received Chat message. Length: " + contentLength);
+                    buffer = new byte[contentLength]; 
+                    he.getRequestBody().read(buffer);
+                    msg = new String(buffer).trim();
+                     
+                }else{
+                    buffer = new byte[MAX_CHAT_LENGTH * 2]; //chars doppelt
+                    int len = he.getRequestBody().read(buffer,0, buffer.length);
+                    msg = new String(buffer, 0, len).trim();
+                }
 
-                if (Radio3.DEV_MODE) System.out.println("Received Chat message. Length: " + contentLength);
-                
-                if(contentLength > 5000){
-                    contentLength = 5000;
+                if(msg.length() == 0){
+                    throw new IOException("Message empty");
                 }
                 
-                buffer = new byte[contentLength]; 
-            
-                he.getRequestBody().read(buffer);
-//                int read = he.getRequestBody().read(buffer);
-//                if(read == 0) throw new IOException("Message null");
                 
             } catch (IOException e) {
-                this.sendError(he);
+                this.sendFalse(he);
                 if (Radio3.DEV_MODE) System.err.println("Error receiving Chat message. " + e.getMessage());
                 return;
             }
             
-            String msg = new String(buffer).trim();
-            if(msg.length()>0){
-                synchronized(this){
-                    chatStack.add(new ChatMessage(msg, he.getRemoteAddress().getAddress()));
-                    notifyAll();
-                }
+            synchronized(this){
+                chatStack.add(new ChatMessage(msg, he.getRemoteAddress().getAddress()));
+                notifyAll();
                 this.sendTrue(he);
             }
 
