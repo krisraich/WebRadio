@@ -59,9 +59,8 @@ public class ChatHandler extends AbstractRequestHandler {
                     chatStack.add(new ChatMessage(msg, he.getRemoteAddress().getAddress()));
                     notifyAll();
                 }
+                this.sendTrue(he);
             }
-            
-            this.sendTrue(he);
 
         } else if (reqURI.equals(context + CMD_CLEAR)) {
             he.getResponseHeaders().add("Content-Type", "application/json");
