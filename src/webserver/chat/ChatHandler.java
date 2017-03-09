@@ -63,10 +63,11 @@ public class ChatHandler extends AbstractRequestHandler {
                 return;
             }
             
+            this.sendTrue(he);
+           
             synchronized(this){
                 chatStack.add(new ChatMessage(msg, he.getRemoteAddress().getAddress()));
                 notifyAll();
-                this.sendTrue(he);
             }
 
         } else if (reqURI.equals(context + CMD_CLEAR)) {
