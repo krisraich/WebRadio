@@ -54,7 +54,7 @@ public class ChatHandler extends AbstractRequestHandler {
             }
             
              synchronized(this){
-                chatStack.add(new ChatMessage( new String(buffer), he.getRemoteAddress()));
+                chatStack.add(new ChatMessage(new String(buffer), he.getRemoteAddress().getAddress()));
                 bytesToSend = chatStack.getChatAsHTML().getBytes();
                 notifyAll();
             }
@@ -65,9 +65,8 @@ public class ChatHandler extends AbstractRequestHandler {
         } else if (reqURI.equals(context + CMD_CLEAR)) {
             chatStack.clear();
             he.getResponseHeaders().add("Content-Type", "application/json");
-            bytesToSend = "empty chat".getBytes();
             synchronized(this){
-                bytesToSend = chatStack.getChatAsHTML().getBytes();
+                bytesToSend = "empty chat".getBytes();
                 notifyAll();
             }
             this.sendTrue(he);
