@@ -4,9 +4,6 @@ import com.sun.net.httpserver.Headers;
 import webserver.*;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import radio3.Radio3;
 
 /**
@@ -35,33 +32,40 @@ public class ChatHandler extends AbstractRequestHandler {
             try {
                 
                 Headers requestHeaders = he.getRequestHeaders();
-                Set<Map.Entry<String, List<String>>> entries = requestHeaders.entrySet();
+//                Set<Map.Entry<String, List<String>>> entries = requestHeaders.entrySet();
                 int contentLength = Integer.parseInt(requestHeaders.getFirst("Content-length"));
 
+                if (Radio3.DEV_MODE) System.out.println("Received Chat message. Length: " + contentLength);
+                
                 if(contentLength > 5000){
                     contentLength = 5000;
                 }
                 
                 buffer = new byte[contentLength]; 
             
-                int read = he.getRequestBody().read(buffer);
-                if(read == 0) throw new IOException("Message null");
+                he.getRequestBody().read(buffer);
+//                int read = he.getRequestBody().read(buffer);
+//                if(read == 0) throw new IOException("Message null");
                 
             } catch (IOException e) {
                 this.sendError(he);
+                if (Radio3.DEV_MODE) System.err.println("Error receiving Chat message. " + e.getMessage());
                 return;
             }
             
-             synchronized(this){
-                chatStack.add(new ChatMessage(new String(buffer), he.getRemoteAddress().getAddress()));
-                notifyAll();
+            String msg = new String(buffer).trim();
+            if(msg.length()>0){
+                synchronized(this){
+                    chatStack.add(new ChatMessage(msg, he.getRemoteAddress().getAddress()));
+                    notifyAll();
+                }
             }
             
-             this.sendTrue(he);
-            
+            this.sendTrue(he);
 
         } else if (reqURI.equals(context + CMD_CLEAR)) {
             he.getResponseHeaders().add("Content-Type", "application/json");
+            if (Radio3.DEV_MODE) System.out.println("Clearing chat");
             chatStack.clear();  
             this.sendTrue(he);
         } else if (reqURI.equals(context + CMD_INSTANT)) {
