@@ -120,7 +120,9 @@ public class Radio3 {
         server.addContext("/update", notifyHandler);
         
         // -------- Aktiviere chat ---------   
-        server.addContext("/chat", new ChatHandler());
+        if(hasChat){
+            server.addContext("/chat", new ChatHandler());
+        }
         
         // -------- Init Player state & Observer ---------
         PlayerState playerState = PlayerState.getInstacnce();

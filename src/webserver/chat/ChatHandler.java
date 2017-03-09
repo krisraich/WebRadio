@@ -27,8 +27,13 @@ public class ChatHandler extends AbstractRequestHandler {
             he.getResponseHeaders().add("Content-Type", "application/json");
 
             byte[] buffer = new byte[4000]; //max 2000 chars
-            int read = he.getRequestBody().read(buffer, 0, buffer.length);
-            
+            int read;
+            try {
+                read = he.getRequestBody().read(buffer, 0, buffer.length);
+            } catch (IOException e) {
+                this.sendError(he);
+                return;
+            }
             
              synchronized(this){
                 chatStack.add(new String(buffer, 0, read));
