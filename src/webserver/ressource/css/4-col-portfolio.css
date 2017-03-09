@@ -5,7 +5,7 @@
  */
 
 body {
-	background: #d7e5ec;
+    background: #d7e5ec;
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
@@ -13,28 +13,28 @@ body {
     margin-bottom: 25px;
     position: relative;
     height:150px;
-	border-radius: 5px;
-	cursor: pointer;
-	
-	-webkit-transition: all 200ms  ;
+    border-radius: 5px;
+    cursor: pointer;
+
+    -webkit-transition: all 200ms  ;
     -moz-transition: all 200ms ;
     -o-transition: all 200ms ;
     transition: all 200ms ;
-	
+
 }
 .portfolio-item.active {
     background-color: lightgray;
 }
 .portfolio-item:hover{
-	background-color: lightgray;
+    background-color: lightgray;
 }
 
 footer {
     margin: 50px 0;
 }
 .img-responsive{
-	max-height: 80px;
-	display: inline;
+    max-height: 80px;
+    display: inline;
 }
 
 .portfolio-item .center-stuff{
@@ -45,19 +45,19 @@ footer {
     transform: translate(-50%, -50%);
 }
 .portfolio-item a img{
-	margin: auto;
+    margin: auto;
 }
 .portfolio-item p{
-	    margin: 10px 0;
+    margin: 10px 0;
 }
 
 @media (max-width: 1199px) {
-	.res-controls{
-		text-align: center !important;
-	}
-	.res-controls:not(:last-of-type) {
-		margin-bottom: 15px;
-	}
+    .res-controls{
+        text-align: center !important;
+    }
+    .res-controls:not(:last-of-type) {
+        margin-bottom: 15px;
+    }
 }
 
 
@@ -69,7 +69,7 @@ body.body-dark {
     color: darkgray;
 }
 .body-dark p{
-	color: lightgray;
+    color: lightgray;
 }
 .body-dark .portfolio-item.active {
     background-color: #424242;
@@ -90,4 +90,12 @@ body.body-dark {
 .btn-default:hover {
     background-color: #e6e6e6 !important;
     border-color: #adadad !important;
+}
+
+textarea#chat-history {
+    resize: none;
+    height: 300px;
+    width: 100%;
+    overflow-y: scroll;
+    margin: 15px 0;
 }

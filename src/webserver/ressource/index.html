@@ -17,7 +17,7 @@
 
         <link href="/css/bootstrap.min.css" rel="stylesheet">
         <link href="/css/4-col-portfolio.css" rel="stylesheet">
- 
+
 
     </head>
 
@@ -51,49 +51,49 @@
             </div>
 
             <div class="row">
-				<div class="col-lg-7">
-					<div class="row">
-						<div class="col-lg-12">
-							<h2 class="page-header">Player Cöntröls</h2>
-						</div>
-						
-						<div class="col-lg-4 res-controls">
-							<div class="btn-group" role="group" aria-label="Volume Controls">
-								<button type="button" class="btn btn-default btn-lg" id="vup"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>
-								<button type="button" class="btn btn-default btn-lg" id="vdown"><span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span></button>
-								<button type="button" class="btn btn-default btn-lg" onclick="javascript: mute()"><span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span></button>
-							</div>
-						</div>
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">Player Cöntröls</h2>
+                        </div>
 
-						<div class="col-lg-8 text-center res-controls">
-							<div class="btn-group" role="group" aria-label="Playback Controls">
-								<button type="button" class="btn btn-default btn-lg" onclick="javascript: pause()"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
-								<button type="button" class="btn btn-default btn-lg" onclick="javascript: prevChannel()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Prev</button>
-								<button type="button" class="btn btn-default btn-lg" onclick="javascript: nextChannel()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Next</button>
-								<button type="button" class="btn btn-default btn-lg" onclick="javascript: rndChannel()"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Rnd</button>
-							</div>
-						</div> 
-					</div>
-				</div>
-				
-				<div class="col-lg-5">
-					<div class="row">
-						<div class="col-lg-12">
-								<h2 class="page-header">Player State</h2>
-						</div>
-						<div class="col-lg-12">
-							<div class="input-group input-group-lg">
-								<span class="input-group-addon" >Playing:</span>
-								<input type="text" class="form-control disabled" readonly id="isPlaying">
-								<span class="input-group-addon" >Vol:</span>
-								<input type="text" class="form-control disabled" readonly id="vol">
-								<span class="input-group-addon" >Mute:</span>
-								<input type="text" class="form-control disabled" readonly id="isMute">
-							</div>
-						</div>
-					</div>
-				</div>
-				
+                        <div class="col-lg-4 res-controls">
+                            <div class="btn-group" role="group" aria-label="Volume Controls">
+                                <button type="button" class="btn btn-default btn-lg" id="vup"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></button>
+                                <button type="button" class="btn btn-default btn-lg" id="vdown"><span class="glyphicon glyphicon-volume-down" aria-hidden="true"></span></button>
+                                <button type="button" class="btn btn-default btn-lg" onclick="javascript: mute()"><span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span></button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8 text-center res-controls">
+                            <div class="btn-group" role="group" aria-label="Playback Controls">
+                                <button type="button" class="btn btn-default btn-lg" onclick="javascript: pause()"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> Play</button>
+                                <button type="button" class="btn btn-default btn-lg" onclick="javascript: prevChannel()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Prev</button>
+                                <button type="button" class="btn btn-default btn-lg" onclick="javascript: nextChannel()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Next</button>
+                                <button type="button" class="btn btn-default btn-lg" onclick="javascript: rndChannel()"><span class="glyphicon glyphicon-random" aria-hidden="true"></span> Rnd</button>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">Player State</h2>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon" >Playing:</span>
+                                <input type="text" class="form-control disabled" readonly id="isPlaying">
+                                <span class="input-group-addon" >Vol:</span>
+                                <input type="text" class="form-control disabled" readonly id="vol">
+                                <span class="input-group-addon" >Mute:</span>
+                                <input type="text" class="form-control disabled" readonly id="isMute">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Page Heading -->
@@ -107,6 +107,20 @@
             <!-- Projects Row -->
             <div id="stationlist" class="row">
 
+            </div>
+
+            <!-- Internal Radio Chat -->
+            <div id="chat" class="container">
+                <h2 class="page-header">Radio Chat!</h2>
+                <div class="row">
+                    <textarea disabled="" class="form-control noresize" id="chat-history"></textarea>
+                </div>
+                <div class="input-group row" id="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" onclick="javascript: sendChatMessage()" type="button">Send message!</button>
+                    </span>
+                    <input type="text" class="form-control" id="chat-send-text" placeholder="Your Message!">
+                </div>
             </div>
 
             <hr>
@@ -131,127 +145,172 @@
 
 
         <script>
-            /*jquery extensions*/
+                            /*jquery extensions*/
 
-            jQuery.fn.random = function () {
-                var randomIndex = Math.floor(Math.random() * this.length);
-                return jQuery(this[randomIndex]);
-            };
-
-
-            /* init ui*/
-           
-            $.get( "/getStationList", function( data ) {
-                //data = JSON.parse(data);
-                for (var i = 0; i < data.length; i++) {
-                   var current = data[i];
-                   $( "#stationlist" ).append( 
-						'<div class="col-md-3 col-sm-6 portfolio-item-wrapper"><div class="portfolio-item" data-chid="' + current.id + '" ><div class="center-stuff"><img class="img-responsive" src="' +current.img + '" alt="' + current.desc + '"><p>' + current.desc + '</p></div></div></div>'       
-                    );
-				}
-				$(".portfolio-item").click(function () {
-					setChannel($(this).data("chid"));
-				});
-            });
-
-            function updatePlayerState(data){
-				if(!data){
-					console.log("empty response");
-					return;
-				}
-				
-                //data = JSON.parse(data);
-                //console.log(data);
-				
-				//set title
-                $("#currenttitle").text(data.title);
-                document.title = data.title + " - Webradio";
-				
-				//player stat
-				$("#isPlaying").val(data.playing ? "Y" : "N");
-				$("#vol").val(data.volume);
-				$("#isMute").val(data.mute ? "Y" : "N");
-
-				//playing id
-                $(".portfolio-item").removeClass("active");
-                $(".portfolio-item[data-chid='" + data.id + "']").addClass("active");
-                
-                //blocking request, random url for multithreading
-				
-				var getData = function(){
-					var random = Math.floor((Math.random() * 1000) + 1);
-					$.get( "/update/blocking/" + random ,updatePlayerState)
-						.fail(function() {
-							console.log("Cant reach Server.. try again");
-							setTimeout(getData, 1000);
-						});
-				};
-				getData();
-				
-            }
-
-            $.get( "/update/instant",updatePlayerState);
-            
-            
-            function sendCmd(cmd){
-                $.get("/control/" + cmd);
-            }
-            
-            
-            function vDown(){
-                sendCmd("voldown");
-            }
-            function vUp(){
-                sendCmd("volup");
-            }
-            function setChannel(id){
-                sendCmd("setStream?id=" + id);
-            }
-            function mute() {
-                sendCmd("mute");
-            }
-            function pause() {
-                sendCmd("pause");
-            }
-
-            var clock;
-            $("#vdown")
-                    .mouseup(function () {
-                        clearInterval(clock);
-                    })
-                    .mousedown(function () {
-                        vDown();
-                        clock = setInterval(vDown, 200);
-                    });
-
-            $("#vup")
-                    .mouseup(function () {
-                        clearInterval(clock);
-                    })
-                    .mousedown(function () {
-                        vUp();
-                        clock = setInterval(vUp, 200);
-                    });
+                            jQuery.fn.random = function () {
+                                var randomIndex = Math.floor(Math.random() * this.length);
+                                return jQuery(this[randomIndex]);
+                            };
 
 
-            function prevChannel() {
-                var chid = $(".portfolio-item.active").parent().prev().find(".portfolio-item").data("chid");
-                if (!chid) {
-                    chid = $(".portfolio-item-wrapper:last-of-type .portfolio-item").data("chid");
-                }
-                setChannel(chid);
-            }
-            function nextChannel() {
-                var chid = $(".portfolio-item.active").parent().next().find(".portfolio-item").data("chid");
-                if (!chid) {
-                    chid = $(".portfolio-item-wrapper:first-of-type .portfolio-item").data("chid");
-                }
-                setChannel(chid);
-            }
-            function rndChannel() {
-                setChannel($(".portfolio-item:not(.active)").random().data("chid"));
-            }
+                            /* init ui*/
 
+                            $.get("/getStationList", function (data) {
+                                //data = JSON.parse(data);
+                                for (var i = 0; i < data.length; i++) {
+                                    var current = data[i];
+                                    $("#stationlist").append(
+                                            '<div class="col-md-3 col-sm-6 portfolio-item-wrapper"><div class="portfolio-item" data-chid="' + current.id + '" ><div class="center-stuff"><img class="img-responsive" src="' + current.img + '" alt="' + current.desc + '"><p>' + current.desc + '</p></div></div></div>'
+                                            );
+                                }
+                                $(".portfolio-item").click(function () {
+                                    setChannel($(this).data("chid"));
+                                });
+                            });
+
+                            function updatePlayerState(data) {
+                                if (!data) {
+                                    console.log("empty response");
+                                    setTimeout(getData, 1000);
+                                    return;
+                                }
+
+                                //data = JSON.parse(data);
+                                //console.log(data);
+
+                                //set title
+                                $("#currenttitle").text(data.title);
+                                document.title = data.title + " - Webradio";
+
+                                //player stat
+                                $("#isPlaying").val(data.playing ? "Y" : "N");
+                                $("#vol").val(data.volume);
+                                $("#isMute").val(data.mute ? "Y" : "N");
+
+                                //playing id
+                                $(".portfolio-item").removeClass("active");
+                                $(".portfolio-item[data-chid='" + data.id + "']").addClass("active");
+                                
+                                //blocking request, random url for multithreading
+
+                                var getData = function () {
+                                    var random = Math.floor((Math.random() * 1000) + 1);
+                                    $.get("/update/blocking/" + random, updatePlayerState)
+                                            .fail(function () {
+                                                console.log("Cant reach Server.. try again");
+                                                setTimeout(getData, 1000);
+                                            });
+                                };
+                                getData();
+
+                            }
+                            
+                            $.get("/update/instant", updatePlayerState);
+                            
+                            
+
+
+
+                            function sendCmd(cmd) {
+                                $.get("/control/" + cmd);
+                            }
+
+
+                            function vDown() {
+                                sendCmd("voldown");
+                            }
+                            function vUp() {
+                                sendCmd("volup");
+                            }
+                            function setChannel(id) {
+                                sendCmd("setStream?id=" + id);
+                            }
+                            function mute() {
+                                sendCmd("mute");
+                            }
+                            function pause() {
+                                sendCmd("pause");
+                            }
+
+                            var clock;
+                            $("#vdown")
+                                    .mouseup(function () {
+                                        clearInterval(clock);
+                                    })
+                                    .mousedown(function () {
+                                        vDown();
+                                        clock = setInterval(vDown, 200);
+                                    });
+
+                            $("#vup")
+                                    .mouseup(function () {
+                                        clearInterval(clock);
+                                    })
+                                    .mousedown(function () {
+                                        vUp();
+                                        clock = setInterval(vUp, 200);
+                                    });
+
+
+                            function prevChannel() {
+                                var chid = $(".portfolio-item.active").parent().prev().find(".portfolio-item").data("chid");
+                                if (!chid) {
+                                    chid = $(".portfolio-item-wrapper:last-of-type .portfolio-item").data("chid");
+                                }
+                                setChannel(chid);
+                            }
+                            function nextChannel() {
+                                var chid = $(".portfolio-item.active").parent().next().find(".portfolio-item").data("chid");
+                                if (!chid) {
+                                    chid = $(".portfolio-item-wrapper:first-of-type .portfolio-item").data("chid");
+                                }
+                                setChannel(chid);
+                            }
+                            function rndChannel() {
+                                setChannel($(".portfolio-item:not(.active)").random().data("chid"));
+                            }
+
+
+                            // Chat Logic
+                            function sendChatMessage(){
+                                var msg = $("#chat-send-text").val();
+                                if(msg !== ""){
+                                    //SEND MESSAGE
+                                    $.post("/chat/add/", msg, function(data){
+                                        if(data){
+                                            $("#chat-send-text").val("");
+                                        }
+                                    });
+                                }
+                            }
+                            $('body').on('keypress', 'input#chat-send-text', function (args) {
+                                if (args.keyCode == 13) {
+                                    sendChatMessage();
+                                    return false;
+                                }
+                            });
+                            function updateChat(data) {
+                                if (!data) {
+                                    console.log("empty chat response");
+                                    setTimeout(getData, 1000);
+                                    return;
+                                }
+
+                                //chat-history
+                                $("#chat-history").value(data);
+                                
+                                //blocking request, random url for multithreading
+                                var getData = function () {
+                                    var random = Math.floor((Math.random() * 1000) + 1);
+                                    $.get("/update/blocking/" + random, updateChat)
+                                            .fail(function () {
+                                                console.log("Cant reach Chat-Server.. try again");
+                                                setTimeout(getData, 1000);
+                                            });
+                                };
+                                getData();
+                            }
+                            $.get("/chat/instant", updateChat);
 
         </script>
 
