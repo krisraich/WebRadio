@@ -34,7 +34,7 @@ public class ChatMessage {
     
     @Override
     public String toString() {
-        return address.toString() + ": " + message;
+        return address.toString().substring(1) + ": " + message;
     }
 
     

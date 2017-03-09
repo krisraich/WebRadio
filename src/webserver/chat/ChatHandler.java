@@ -21,7 +21,6 @@ public class ChatHandler extends AbstractRequestHandler {
     public static final String CMD_INSTANT = "/instant";
 
     private final ChatStack chatStack = new ChatStack(30);
-    private volatile byte[] bytesToSend = "empty chat".getBytes();
 
     @Override
     public void handle(HttpExchange he) throws IOException {
@@ -55,7 +54,6 @@ public class ChatHandler extends AbstractRequestHandler {
             
              synchronized(this){
                 chatStack.add(new ChatMessage(new String(buffer), he.getRemoteAddress().getAddress()));
-                bytesToSend = chatStack.getChatAsHTML().getBytes();
                 notifyAll();
             }
             
@@ -63,24 +61,21 @@ public class ChatHandler extends AbstractRequestHandler {
             
 
         } else if (reqURI.equals(context + CMD_CLEAR)) {
-            chatStack.clear();
             he.getResponseHeaders().add("Content-Type", "application/json");
-            synchronized(this){
-                bytesToSend = "empty chat".getBytes();
-                notifyAll();
-            }
+            chatStack.clear();  
             this.sendTrue(he);
         } else if (reqURI.equals(context + CMD_INSTANT)) {
             
             he.getResponseHeaders().add("Content-Type", "text/html");
-            this.sendData(he, bytesToSend);
+            this.sendData(he, chatStack.getOutCache());
+            
         } else if (reqURI.startsWith(context + CMD_BLOCK)) {
             he.getResponseHeaders().add("Content-Type", "text/html");
             try {
                 synchronized (this) {
                     wait();
                     if (Radio3.DEV_MODE) System.out.println("Sending chat to: " + he.getRemoteAddress());
-                    this.sendData(he, bytesToSend);
+                    this.sendData(he, chatStack.getOutCache());
                 }
             } catch (InterruptedException ex) {
                 System.err.println("Timeout while waiting [chat]");

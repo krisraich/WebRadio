@@ -13,8 +13,12 @@ public class ChatStack extends LinkedList<ChatMessage> {
     private final int maxSize;
     private final String LINE_DELIMITER ="\n"; // "</ br>";
 
+    private volatile byte[] outCache;
+    public final static String EMPTY_CHAT = "-- empty chat --";
+    
     public ChatStack(int maxSize) {
         this.maxSize = maxSize;
+        updateCache();
     }
 
     @Override
@@ -22,19 +26,35 @@ public class ChatStack extends LinkedList<ChatMessage> {
         if(this.size() == maxSize){
             this.removeFirst();
         }
-        return super.add(e); 
+        super.add(e);
+        updateCache();
+        
+        return true;
     }
 
+    @Override
+    public void clear() {
+        super.clear();
+        updateCache();
+    }
+
+    public byte[] getOutCache() {
+        return outCache;
+    }
     
-    public String getChatAsHTML(){
-        StringBuilder sb = new StringBuilder();
-        for (ChatMessage current : this) {
-            sb.append(current);
-            sb.append(LINE_DELIMITER);
+    private void updateCache(){
+        if(this.isEmpty()){
+            outCache = EMPTY_CHAT.getBytes();
+        }else{
+            StringBuilder sb = new StringBuilder();
+            for (ChatMessage current : this) {
+                sb.append(current);
+                sb.append(LINE_DELIMITER);
+            }
+            sb.setLength(sb.length() - LINE_DELIMITER.length());
+
+            outCache =  sb.toString().getBytes();
         }
-        sb.setLength(sb.length() - LINE_DELIMITER.length());
-       
-        return sb.toString();
     }
     
 }
