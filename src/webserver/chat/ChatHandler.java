@@ -3,8 +3,6 @@ package webserver.chat;
 import webserver.*;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
-import java.util.Observable;
-import player.state.PlayerState;
 import radio3.Radio3;
 
 /**
