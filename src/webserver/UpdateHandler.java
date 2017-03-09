@@ -38,7 +38,7 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
                     this.sendData(he, waitToSendByteArray);
                 }
             } catch (InterruptedException ex) {
-                System.err.println("Timeout while waiting");
+                System.err.println("Timeout while waiting [control]");
                 this.sendError(he);
             }
             

@@ -9,6 +9,7 @@ import stations.StationManager;
 import webserver.ControlHandler;
 import webserver.UpdateHandler;
 import webserver.WebServer;
+import webserver.chat.ChatHandler;
 
 
 /**
@@ -53,12 +54,15 @@ public class Radio3 {
         // -------- DEFAULTS ---------
         int port = 80; //default Port
         String fifoFilePath = null;
-        
+        boolean hasChat = true;
         
         // ------- PARS ARGS ---------
         for (String currentArgument : args) {
             if(currentArgument.toLowerCase().equals("--debug")){
                Radio3.DEV_MODE = true;
+            }
+            if(currentArgument.toLowerCase().equals("--nochat")){
+               hasChat = false;
             }
             
             if(currentArgument.toLowerCase().startsWith("p=")){
@@ -115,6 +119,8 @@ public class Radio3 {
         UpdateHandler notifyHandler = new UpdateHandler();
         server.addContext("/update", notifyHandler);
         
+        // -------- Aktiviere chat ---------   
+        server.addContext("/chat", new ChatHandler());
         
         // -------- Init Player state & Observer ---------
         PlayerState playerState = PlayerState.getInstacnce();
