@@ -1,8 +1,12 @@
 package webserver.chat;
 
+import com.sun.net.httpserver.Headers;
 import webserver.*;
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import radio3.Radio3;
 
 /**
@@ -12,6 +16,7 @@ import radio3.Radio3;
 public class ChatHandler extends AbstractRequestHandler {
 
     public static final String CMD_ADD = "/add";
+    public static final String CMD_CLEAR = "/clear";
     public static final String CMD_BLOCK = "/blocking";
     public static final String CMD_INSTANT = "/instant";
 
@@ -23,14 +28,24 @@ public class ChatHandler extends AbstractRequestHandler {
 
         String reqURI = he.getRequestURI().toString();
 
-        if (reqURI.equals(context + CMD_ADD)) {
+        if (reqURI.equals(context + CMD_ADD) && he.getRequestMethod().equalsIgnoreCase("POST")) {
+            
             he.getResponseHeaders().add("Content-Type", "application/json");
-
-            byte[] buffer = new byte[4000]; //max 2000 chars
-            int read;
+            
+            byte[] buffer;
             try {
                 
-                read = he.getRequestBody().read(buffer, 0, buffer.length);
+                Headers requestHeaders = he.getRequestHeaders();
+                Set<Map.Entry<String, List<String>>> entries = requestHeaders.entrySet();
+                int contentLength = Integer.parseInt(requestHeaders.getFirst("Content-length"));
+
+                if(contentLength > 5000){
+                    contentLength = 5000;
+                }
+                
+                buffer = new byte[contentLength]; 
+            
+                int read = he.getRequestBody().read(buffer);
                 if(read == 0) throw new IOException("Message null");
                 
             } catch (IOException e) {
@@ -39,7 +54,7 @@ public class ChatHandler extends AbstractRequestHandler {
             }
             
              synchronized(this){
-                chatStack.add(new String(buffer, 0, read));
+                chatStack.add(new ChatMessage( new String(buffer), he.getRemoteAddress()));
                 bytesToSend = chatStack.getChatAsHTML().getBytes();
                 notifyAll();
             }
@@ -47,11 +62,19 @@ public class ChatHandler extends AbstractRequestHandler {
              this.sendTrue(he);
             
 
+        } else if (reqURI.equals(context + CMD_CLEAR)) {
+            chatStack.clear();
+            he.getResponseHeaders().add("Content-Type", "application/json");
+            bytesToSend = "empty chat".getBytes();
+            synchronized(this){
+                bytesToSend = chatStack.getChatAsHTML().getBytes();
+                notifyAll();
+            }
+            this.sendTrue(he);
         } else if (reqURI.equals(context + CMD_INSTANT)) {
             
             he.getResponseHeaders().add("Content-Type", "text/html");
             this.sendData(he, bytesToSend);
-            
         } else if (reqURI.startsWith(context + CMD_BLOCK)) {
             he.getResponseHeaders().add("Content-Type", "text/html");
             try {

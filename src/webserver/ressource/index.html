@@ -276,7 +276,7 @@
                                 var msg = $("#chat-send-text").val();
                                 if(msg !== ""){
                                     //SEND MESSAGE
-                                    $.post("/chat/add/", msg, function(data){
+                                    $.post("/chat/add", msg, function(data){
                                         if(data){
                                             $("#chat-send-text").val("");
                                         }
@@ -298,11 +298,12 @@
 
                                 //chat-history
                                 $("#chat-history").val(data);
+                                $("#chat-history").scrollTop($("#chat-history")[0].scrollHeight);
                                 
                                 //blocking request, random url for multithreading
                                 var getData = function () {
                                     var random = Math.floor((Math.random() * 1000) + 1);
-                                    $.get("/update/blocking/" + random, updateChat)
+                                    $.get("/chat/blocking/" + random, updateChat)
                                             .fail(function () {
                                                 console.log("Cant reach Chat-Server.. try again");
                                                 setTimeout(getData, 1000);
