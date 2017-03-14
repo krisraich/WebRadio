@@ -2,6 +2,9 @@ package webserver;
 
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 import player.MediaPlayerControl;
 import radio3.Radio3;
 
@@ -21,6 +24,8 @@ public class ControlHandler extends AbstractRequestHandler{
     public static final String CMD_SETSTREAM = "/setStream?id=";
     
     
+    public static List<String> allowedIPAddresses = new ArrayList<>();
+    
     
     private final MediaPlayerControl mediaPlayerControl;
 
@@ -33,7 +38,17 @@ public class ControlHandler extends AbstractRequestHandler{
     public void handle(HttpExchange he) throws IOException {
        
         String reqURI = he.getRequestURI().toString();
+        String requestAddress = he.getRemoteAddress().getAddress().toString().substring(1);
         he.getResponseHeaders().add("Content-Type", "application/json");
+       
+        if(! allowedIPAddresses.isEmpty() && ! allowedIPAddresses.contains(requestAddress)){
+            
+            if(Radio3.DEV_MODE) System.out.println("Blocked control request from: " + requestAddress);
+            
+            this.sendFalse(he);
+            return;
+        }
+        
         
         if( Radio3.DEV_MODE){
             System.out.println("Received cmd '" + reqURI + "' from: " + he.getRemoteAddress());
