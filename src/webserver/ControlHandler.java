@@ -42,9 +42,7 @@ public class ControlHandler extends AbstractRequestHandler{
         he.getResponseHeaders().add("Content-Type", "application/json");
        
         if(! allowedIPAddresses.isEmpty() && ! allowedIPAddresses.contains(requestAddress)){
-            
-            if(Radio3.DEV_MODE) System.out.println("Blocked control request from: " + requestAddress);
-            
+           System.out.println("Blocked control request from: " + requestAddress);
             this.sendFalse(he);
             return;
         }

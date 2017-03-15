@@ -2,6 +2,7 @@ package player;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import player.state.PlayerState;
 import player.state.StateReader;
 import stations.StationManager;
 
@@ -25,7 +26,8 @@ public class MPlayerWrapper {
             do {
                 try {
                     process = processBuilder.start();
-
+                    PlayerState.getInstacnce().setId(StationManager.getInstance().getFirstEntryID());
+                    
                     StateReader.bindInputStreamAndProcess(process.getInputStream());
 
                     process.waitFor();

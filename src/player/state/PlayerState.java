@@ -10,9 +10,11 @@ import radio3.Util;
 public class PlayerState extends Observable{
 
     private String streamTitle;
-    private byte volume;
-    private boolean mute;
-    private boolean playing;
+
+    //defaults
+    private byte volume = 50;
+    private boolean mute = false;
+    private boolean playing = true;
     private int id = 1;
 
 
@@ -28,7 +30,7 @@ public class PlayerState extends Observable{
     
     
     private void checkedNotifyObserver(){
-        System.out.println("--- State changed -----");
+        System.out.println("--- State changed ---");
         System.out.println(this);
         this.setChanged();
         this.notifyObservers(getStateForWebRequest());

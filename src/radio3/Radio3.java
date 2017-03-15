@@ -1,12 +1,6 @@
 package radio3;
 
 import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import player.MPlayerController;
 import player.MPlayerWrapper;
 import player.state.PlayerState;
@@ -56,6 +50,11 @@ public class Radio3 {
      */
     public static void main(String[] args) {
 
+//        remote debugging
+//        try {
+//            System.in.read();
+//        } catch (IOException ex) {}
+
         
         // -------- DEFAULTS ---------
         int port = 80; //default Port
@@ -72,10 +71,10 @@ public class Radio3 {
             }
             
             if(currentArgument.toLowerCase().startsWith("--allow-ip-only=")){
-                String[] ipaddesses = currentArgument.substring(16).split(";");
+                String[] ipaddesses = currentArgument.substring(16).split("#");
                 
                 for (String current : ipaddesses) {
-                    ControlHandler.allowedIPAddresses.add(current);
+                    ControlHandler.allowedIPAddresses.add(current.trim());
                     System.out.println("Allwoing IP: " + current);
                 }
             }

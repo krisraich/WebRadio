@@ -70,8 +70,6 @@ public class StationManager {
     public synchronized byte[] getBeansAsJsonArray(){
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        
-        
         for (Map.Entry<Integer, StationBean> entry : stationBeans.entrySet()) {
             sb.append(entry.getValue().toJsonString());
             sb.append(",");
@@ -87,6 +85,9 @@ public class StationManager {
     
     public synchronized String getFirstEntryPath(){
         return stationBeans.get(stationBeans.firstKey()).getPath();
+    }
+    public synchronized int getFirstEntryID(){
+        return stationBeans.firstKey();
     }
     
 }
