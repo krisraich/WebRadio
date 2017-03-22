@@ -74,7 +74,7 @@ public class StationManager {
             sb.append(entry.getValue().toJsonString());
             sb.append(",");
         }
-        sb.deleteCharAt(sb.length()-1);
+        sb.setLength(sb.length()-1);
         sb.append("]");
         return sb.toString().getBytes();
     }

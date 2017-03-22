@@ -56,7 +56,7 @@ public class AccessManageHandler extends AbstractRequestHandler {
                 sb.append("\",");
             });
             
-            sb.deleteCharAt(sb.length()-1);
+            sb.setLength(sb.length()-1);
             sb.append(']');
             this.sendData(he, sb.toString().getBytes());
             
