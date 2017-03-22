@@ -16,17 +16,16 @@ public class UpdateHandler extends AbstractRequestHandler implements Observer{
     public static final String CMD_BLOCK = "/blocking";
     public static final String CMD_INSTANT = "/instant";
 
-    private volatile byte[] waitToSendByteArray;
+    private byte[] waitToSendByteArray;
     
     @Override
     public void handle(HttpExchange he) throws IOException {
        
         String reqURI = he.getRequestURI().toString();
         he.getResponseHeaders().add("Content-Type", "application/json");
-        
+        he.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         
        if(reqURI.equals(context + CMD_INSTANT)){
-           
            this.sendData(he, PlayerState.getInstacnce().getStateForWebRequest());
            
        }else if(reqURI.startsWith(context + CMD_BLOCK)){

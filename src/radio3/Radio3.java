@@ -50,7 +50,7 @@ public class Radio3 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+                
 //        remote debugging
 //        try {
 //            System.in.read();
@@ -78,7 +78,7 @@ public class Radio3 {
                 String[] ipaddesses = currentArgument.substring(16).split("#");
                 
                 for (String current : ipaddesses) {
-                    ControlHandler.getAllowedIPAddresses().add(current.trim());
+                    AccessManageHandler.getAllowedIPAddresses().add(current.trim());
                     System.out.println("Allwoing IP: " + current);
                 }
             }

@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import player.MediaPlayerControl;
 import radio3.Radio3;
 
@@ -23,8 +24,7 @@ public class ControlHandler extends AbstractRequestHandler{
     private static final String CMD_SETSTREAM = "/setStream?id=";
     
     
-    private static final List<String> ALLOWED_IP_ADDRESSES = new ArrayList<>();
-    
+     
     
     private final MediaPlayerControl mediaPlayerControl;
 
@@ -40,7 +40,7 @@ public class ControlHandler extends AbstractRequestHandler{
         String requestAddress = he.getRemoteAddress().getAddress().toString().substring(1);
         he.getResponseHeaders().add("Content-Type", "application/json");
        
-        if(! ALLOWED_IP_ADDRESSES.isEmpty() && ! ALLOWED_IP_ADDRESSES.contains(requestAddress)){
+        if(AccessManageHandler.hasPermission(requestAddress)){
             System.out.println("Blocked control request from: " + requestAddress);
             this.sendFalse(he);
             return;
@@ -81,8 +81,6 @@ public class ControlHandler extends AbstractRequestHandler{
        this.sendTrue(he);
     }
 
-    public static List<String> getAllowedIPAddresses() {
-        return ALLOWED_IP_ADDRESSES;
-    }
+  
     
 }
