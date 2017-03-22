@@ -2,7 +2,6 @@ package webserver;
 
 import com.sun.net.httpserver.HttpExchange;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import player.MediaPlayerControl;
@@ -14,17 +13,17 @@ import radio3.Radio3;
  */
 public class ControlHandler extends AbstractRequestHandler{
 
-    public static final String CMD_PAUSE = "/pause";
-    public static final String CMD_PLAY = "/play";
-    public static final String CMD_STOP = "/stop";
-    public static final String CMD_MUTE = "/mute";
-    public static final String CMD_UNMUTE = "/unmute";
-    public static final String CMD_VOLUP = "/volup";
-    public static final String CMD_VOLDOWN = "/voldown";
-    public static final String CMD_SETSTREAM = "/setStream?id=";
+    private static final String CMD_PAUSE = "/pause";
+    private static final String CMD_PLAY = "/play";
+    private static final String CMD_STOP = "/stop";
+    private static final String CMD_MUTE = "/mute";
+    private static final String CMD_UNMUTE = "/unmute";
+    private static final String CMD_VOLUP = "/volup";
+    private static final String CMD_VOLDOWN = "/voldown";
+    private static final String CMD_SETSTREAM = "/setStream?id=";
     
     
-    public static List<String> allowedIPAddresses = new ArrayList<>();
+    private static final List<String> ALLOWED_IP_ADDRESSES = new ArrayList<>();
     
     
     private final MediaPlayerControl mediaPlayerControl;
@@ -41,8 +40,8 @@ public class ControlHandler extends AbstractRequestHandler{
         String requestAddress = he.getRemoteAddress().getAddress().toString().substring(1);
         he.getResponseHeaders().add("Content-Type", "application/json");
        
-        if(! allowedIPAddresses.isEmpty() && ! allowedIPAddresses.contains(requestAddress)){
-           System.out.println("Blocked control request from: " + requestAddress);
+        if(! ALLOWED_IP_ADDRESSES.isEmpty() && ! ALLOWED_IP_ADDRESSES.contains(requestAddress)){
+            System.out.println("Blocked control request from: " + requestAddress);
             this.sendFalse(he);
             return;
         }
@@ -70,7 +69,7 @@ public class ControlHandler extends AbstractRequestHandler{
            try{
                 int stationid = Integer.parseInt(reqURI.substring(context.length() + CMD_SETSTREAM.length()));
                 this.mediaPlayerControl.setStationID(stationid);
-           }catch(Exception e){
+           }catch(NumberFormatException e){
                System.err.println("Cant parse station id");
                this.sendError(he);
            }
@@ -81,4 +80,9 @@ public class ControlHandler extends AbstractRequestHandler{
        }
        this.sendTrue(he);
     }
+
+    public static List<String> getAllowedIPAddresses() {
+        return ALLOWED_IP_ADDRESSES;
+    }
+    
 }

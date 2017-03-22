@@ -6,6 +6,7 @@ import player.MPlayerWrapper;
 import player.state.PlayerState;
 import player.state.StateReader;
 import stations.StationManager;
+import webserver.AccessManageHandler;
 import webserver.ControlHandler;
 import webserver.UpdateHandler;
 import webserver.WebServer;
@@ -49,7 +50,7 @@ public class Radio3 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
 //        remote debugging
 //        try {
 //            System.in.read();
@@ -60,6 +61,7 @@ public class Radio3 {
         int port = 80; //default Port
         String fifoFilePath = null;
         boolean hasChat = true;
+        boolean hasSeenAllowIP = false;
         
         // ------- PARS ARGS ---------
         for (String currentArgument : args) {
@@ -70,11 +72,13 @@ public class Radio3 {
                hasChat = false;
             }
             
-            if(currentArgument.toLowerCase().startsWith("--allow-ip-only=")){
+            if(! hasSeenAllowIP && currentArgument.toLowerCase().startsWith("--allow-ip-only=")){
+                hasSeenAllowIP = true;
+                
                 String[] ipaddesses = currentArgument.substring(16).split("#");
                 
                 for (String current : ipaddesses) {
-                    ControlHandler.allowedIPAddresses.add(current.trim());
+                    ControlHandler.getAllowedIPAddresses().add(current.trim());
                     System.out.println("Allwoing IP: " + current);
                 }
             }
@@ -137,6 +141,14 @@ public class Radio3 {
         if(hasChat){
             server.addContext("/chat", new ChatHandler());
         }
+        
+        
+        // -------- Aktiviere Access Mgmt ---------   
+        if(hasSeenAllowIP){
+            server.addContext("/access", new AccessManageHandler());
+        }
+        
+        
         
         // -------- Init Player state & Observer ---------
         PlayerState playerState = PlayerState.getInstacnce();
