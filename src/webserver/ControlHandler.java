@@ -40,7 +40,7 @@ public class ControlHandler extends AbstractRequestHandler{
         String requestAddress = he.getRemoteAddress().getAddress().toString().substring(1);
         he.getResponseHeaders().add("Content-Type", "application/json");
        
-        if(AccessManageHandler.hasPermission(requestAddress)){
+        if(! AccessManageHandler.hasPermission(requestAddress)){
             System.out.println("Blocked control request from: " + requestAddress);
             this.sendFalse(he);
             return;
