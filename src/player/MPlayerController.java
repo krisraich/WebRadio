@@ -13,7 +13,6 @@ import stations.StationManager;
  */
 public class MPlayerController implements MediaPlayerControl {
 
-//    final private Path pathToFifoFile;
     private final String pathToFifoFile;
 
     public MPlayerController(String pathToFifoFile) {
@@ -26,7 +25,7 @@ public class MPlayerController implements MediaPlayerControl {
             fileWriter.write(cmd);
             fileWriter.write("\n"); //nicht vergessen!!
             fileWriter.flush();
-        if(Radio3.DEV_MODE) System.out.println("... done");
+            if(Radio3.DEV_MODE) System.out.println("... done");
         } catch (IOException ex) {
             System.err.println("FiFo File konnte nicht beschrieben werden: " + ex.getMessage());
         }
@@ -49,14 +48,19 @@ public class MPlayerController implements MediaPlayerControl {
 
     @Override
     public void mute() {
-        writeToFiFo("mute");
+        writeToFiFo("mute 1");
     }
 
     @Override
     public void unmute() {
-        mute();
+        writeToFiFo("mute 0");
     }
 
+    @Override
+    public void togglemute() {
+        writeToFiFo("mute");
+    }
+    
     @Override
     public void volumeUp() {
         writeToFiFo("volume 1");

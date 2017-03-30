@@ -19,6 +19,7 @@ public class ControlHandler extends AbstractRequestHandler{
     private static final String CMD_STOP = "/stop";
     private static final String CMD_MUTE = "/mute";
     private static final String CMD_UNMUTE = "/unmute";
+    private static final String CMD_SETMUTE = "/setmute";
     private static final String CMD_VOLUP = "/volup";
     private static final String CMD_VOLDOWN = "/voldown";
     private static final String CMD_SETSTREAM = "/setStream?id=";
@@ -58,6 +59,8 @@ public class ControlHandler extends AbstractRequestHandler{
        }else if(reqURI.equals(context + CMD_STOP)){
            this.mediaPlayerControl.stop();
        }else if(reqURI.equals(context + CMD_MUTE)){
+           this.mediaPlayerControl.togglemute();
+       }else if(reqURI.equals(context + CMD_SETMUTE)){
            this.mediaPlayerControl.mute();
        }else if(reqURI.equals(context + CMD_UNMUTE)){
            this.mediaPlayerControl.unmute();

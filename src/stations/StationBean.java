@@ -13,22 +13,7 @@ public class StationBean {
     private String desc;
     private String path;
 
-    @Override
-    public String toString() {
-                return "ID: " + this.id + 
-                "\r\nURL: " + this.path +
-                "\r\nBeschreibung: " + this.desc +
-                "\r\nBild URL: " + this.img;
-    }
-
-    public String toJsonString(){
-        return (" { \"path\": " + Util.sanitizeJson(this.path) + ", " + 
-                "\"id\": " + this.id + ", " + 
-                "\"desc\": " + Util.sanitizeJson(this.desc) + ", " + 
-                "\"img\": " +  Util.sanitizeJson(this.img) + "}");
-    }
-    
-    
+  
     
     public String getImg() {
         return img;
@@ -62,6 +47,21 @@ public class StationBean {
         this.id = id;
     }
     
+    
+      @Override
+    public String toString() {
+                return "ID: " + this.id + 
+                "\r\nURL: " + this.path +
+                "\r\nBeschreibung: " + this.desc +
+                "\r\nBild URL: " + this.img;
+    }
+
+    public String toJsonString(){
+        return (" { \"path\": " + Util.sanitizeJson(this.path) + ", " + 
+                "\"id\": " + this.id + ", " + 
+                "\"desc\": " + Util.sanitizeJson(this.desc) + ", " + 
+                "\"img\": " +  Util.sanitizeJson(this.img) + "}");
+    }
     
     
     

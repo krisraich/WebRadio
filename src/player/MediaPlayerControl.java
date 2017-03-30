@@ -12,6 +12,7 @@ public interface MediaPlayerControl {
     
     public void mute();
     public void unmute();
+    public void togglemute();
     public void volumeUp();
     public void volumeDown();
     
