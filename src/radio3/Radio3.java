@@ -3,6 +3,7 @@ package radio3;
 import java.io.IOException;
 import player.MPlayerController;
 import player.MPlayerWrapper;
+import player.MediaPlayerControl;
 import player.state.PlayerState;
 import player.state.StateReader;
 import stations.StationManager;
@@ -105,10 +106,9 @@ public class Radio3 {
         }
 
         
-        
         // -------- Starte Webserver ---------
         
-        System.out.println("starting awesome webraido");
+        System.out.println("starting awesome webradio");
         
         WebServer server = new WebServer(port);
         try {
@@ -128,8 +128,10 @@ public class Radio3 {
             mPlayerWrapper = new MPlayerWrapper();
         }else{
             //player cöntrolls wenn fifoFile angegeben ist
-            server.addContext("/control", new ControlHandler(new MPlayerController(fifoFilePath)));
-            mPlayerWrapper = new MPlayerWrapper(fifoFilePath);
+            
+            MediaPlayerControl mediaPlayerControl = new MPlayerController(fifoFilePath);
+            server.addContext("/control", new ControlHandler(mediaPlayerControl));
+            mPlayerWrapper = new MPlayerWrapper(fifoFilePath, mediaPlayerControl);
         }
         
         
@@ -153,6 +155,7 @@ public class Radio3 {
         // -------- Init Player state & Observer ---------
         PlayerState playerState = PlayerState.getInstacnce();
         playerState.addObserver(notifyHandler);
+        playerState.addObserver(mPlayerWrapper);
 
         
         // -------- Starte den stuff ---------

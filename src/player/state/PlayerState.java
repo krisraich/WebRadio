@@ -29,7 +29,7 @@ public class PlayerState extends Observable{
     }
     
     
-    private void checkedNotifyObserver(){
+    public void checkedNotifyObserver(){
         System.out.println("--- State changed ---");
         System.out.println(this);
         this.setChanged();
@@ -42,18 +42,20 @@ public class PlayerState extends Observable{
         return streamTitle;
     }
 
-    public void setStreamTitle(String streamTitle) {
+    public boolean setStreamTitle(String streamTitle) {
         if(! streamTitle.equals(this.streamTitle)){
             this.streamTitle = streamTitle;
             checkedNotifyObserver();
+            return true;
         }
+        return false;
     }
 
     public byte getVolume() {
         return volume;
     }
 
-    public void setVolume(byte volume) {
+    public boolean setVolume(byte volume) {
         if(volume > 0){
             mute = false;
         }
@@ -61,14 +63,16 @@ public class PlayerState extends Observable{
         if(this.volume != volume){
             this.volume = volume;
             checkedNotifyObserver();
+            return true;
         }
+        return false;
     }
 
     public boolean isMute() {
         return mute;
     }
 
-    public void setMute(boolean mute) {
+    public boolean setMute(boolean mute) {
         if(mute){
             this.volume = 0;
         }
@@ -76,29 +80,35 @@ public class PlayerState extends Observable{
         if(this.mute != mute){
             this.mute = mute;
             checkedNotifyObserver();
+            return true;
         }
+        return false;
     }
 
     public boolean isPlaying() {
         return playing;
     }
 
-    public void setPlaying(boolean playing) {
+    public boolean setPlaying(boolean playing) {
         if(this.playing != playing){
             this.playing = playing;
             checkedNotifyObserver();
+            return true;
         }
+        return false;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public boolean setId(int id) {
         if(this.id != id){
             this.id = id;
             checkedNotifyObserver();
+            return true;
         }
+        return false;
     }
     
     
